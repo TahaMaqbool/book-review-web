@@ -1,0 +1,10 @@
+.right {
+  background-color: #00CCFF;
+  padding: 8px 16px;
+  display: inline-block;
+  text-decoration: none;
+  color: #FFFFFF;
+  border-radius: 3px;
+  position: absolute;
+  right: 40px;
+}

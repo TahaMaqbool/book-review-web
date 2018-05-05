@@ -1,0 +1,26 @@
+<form [formGroup]="bookForm" (ngSubmit)="submitForm()">
+  <fieldset [disabled]="isSubmitting">
+    <fieldset class="form-group">
+      <input
+        formControlName="title"
+        placeholder="Title"
+        type="text"
+      />
+    </fieldset>
+    <fieldset class="form-group">
+      <input
+        formControlName="description"
+        placeholder="Description"
+        type="text" />
+    </fieldset>
+    <fieldset class="form-group">
+      <input
+        formControlName="author"
+        placeholder="Author"
+        type="text" />
+    </fieldset>
+    <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!bookForm.valid" type="submit">
+      Submit
+    </button>
+  </fieldset>
+</form>
