@@ -27,11 +27,25 @@ export class BookService {
   createBook(book: Book): Observable<Book> {
     const url = this.api + '/books';
     console.log('before submit', book);
-    return this.http.post<Book>(url, book)
+    return this.http.post<Book>(url, book);
+  }
+
+  updateBook(book: Book): Observable<Book> {
+    const url = this.api + '/books/' + book.id;
+    return this.http.put<Book>(url, book);
+  }
+
+  getBook (id: number): Observable<Book> {
+    const url = this.api + '/books/' + id;
+    return this.http.get<Book>(url)
       .pipe(
-        tap(data => console.log(data))
-//        map(data => data)
+        map(data => data)
       );
+  }
+
+  deleteBook (id: number): Observable<Book> {
+    const url = this.api + '/books/' + id;
+    return this.http.delete<Book>(url);
   }
 
 }

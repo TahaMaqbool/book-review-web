@@ -1,0 +1,46 @@
+<button (click)="goBack()">go back</button>
+
+<div *ngIf="book && !edit">
+<h2>{{ book.title }}</h2>
+<h3>{{ book.author }}</h3>
+<p>{{ book.description }}</p>
+</div>
+
+<div *ngIf="edit && book">
+  <form [formGroup]="editBookForm" (ngSubmit)="submitForm()">
+    <fieldset [disabled]="isSubmitting">
+      <fieldset class="form-group">
+        <input
+          formControlName="title"
+          [(ngModel)]="book.title"
+          placeholder="Title"
+          type="text"
+        />
+      </fieldset>
+      <fieldset class="form-group">
+        <input
+          formControlName="author"
+          [(ngModel)]="book.author"
+          placeholder="Author"
+          type="text" />
+      </fieldset>
+      <fieldset class="form-group">
+        <input
+          formControlName="description"
+          placeholder="Description"
+          [(ngModel)]="book.description"
+          type="text" />
+      </fieldset>
+      <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!editBookForm.valid" type="submit">
+        Submit
+      </button>
+    </fieldset>
+  </form>
+</div>
+
+
+
+<div *ngIf="!edit">
+  <button (click)="edit=true; isSubmitting = false">Edit</button>
+  <button (click)="deleteBook()">Delete</button>
+</div>

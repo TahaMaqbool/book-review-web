@@ -3,5 +3,5 @@
   Here are some awesome books!
 </p>
 <ul *ngFor="let book of books">
-  <li>{{ book.title }}</li>
+  <a routerLink="/books/{{book.id}}"><li>{{ book.title }}</li></a>
 </ul>
