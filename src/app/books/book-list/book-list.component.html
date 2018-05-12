@@ -2,6 +2,6 @@
 <p>
   Here are some awesome books!
 </p>
-<ul *ngFor="let book of books">
-  <a routerLink="/books/{{book.id}}"><li>{{ book.title }}</li></a>
+<ul>
+  <li *ngFor="let book of books"><a routerLink="/books/{{book.id}}">{{ book.title }}</a></li>
 </ul>
