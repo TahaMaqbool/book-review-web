@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  api: 'https://powerful-wave-96187.herokuapp.com'
+  token_auth_config: {
+    apiBase: 'https://powerful-wave-96187.herokuapp.com'
+  }
 };
