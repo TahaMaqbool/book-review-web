@@ -40,7 +40,7 @@
 
 
 
-<div *ngIf="!edit">
+<div *ngIf="!edit && book && (authService.currentUser$ | async) && authService.currentUser$.getValue().id == book.user_id">
   <button (click)="edit=true; isSubmitting = false">Edit</button>
   <button (click)="deleteBook()">Delete</button>
 </div>

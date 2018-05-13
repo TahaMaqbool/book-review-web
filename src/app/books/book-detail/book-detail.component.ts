@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import {ActivatedRoute, Router} from '@angular/router';
 import {BookService} from '../../services/book.service';
 import {Book} from '../../models/book';
+import { Angular2TokenService } from 'angular2-token';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-book-detail',
@@ -22,7 +24,9 @@ export class BookDetailComponent implements OnInit {
               private router: Router,
               private location: Location,
               private fb: FormBuilder,
-              private bookService: BookService) {
+              public tokenService: Angular2TokenService,
+              private bookService: BookService,
+              public authService: AuthService) {
     this.editBookForm = this.fb.group({
       'id': [''],
       'title': ['', Validators.required],

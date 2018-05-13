@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {Angular2TokenService} from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
 
@@ -9,23 +10,28 @@ import {AuthService} from '../../services/auth.service';
 })
 export class RegisterFormComponent implements OnInit {
 
-  signUpUser = {
-    email: '',
-    name: '',
-    password: '',
-    passwordConfirmation: ''
-  };
+  registerForm: FormGroup;
 
   @Output() onFormResult = new EventEmitter<any>();
 
-  constructor(public tokenAuthSerivce: Angular2TokenService, public authService: AuthService) { }
+  constructor(
+    public tokenAuthSerivce: Angular2TokenService,
+    public authService: AuthService,
+    private fb: FormBuilder,
+  ) {
+    this.registerForm = this.fb.group({
+      'email': ['', Validators.required],
+      'name': ['', Validators.required],
+      'password': ['', Validators.required],
+      'passwordConfirmation': ['', Validators.required]
+    });
+  }
 
   ngOnInit() {}
 
 
-  onSignUpSubmit() {
-
-    this.authService.registerUser(this.signUpUser).subscribe(
+  submitForm() {
+    this.authService.registerUser(this.registerForm.value).subscribe(
 
       (res) => {
 

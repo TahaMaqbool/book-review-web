@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Angular2TokenService} from 'angular2-token';
-import {Subject, Observable} from 'rxjs';
+import {Subject, Observable, BehaviorSubject} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
@@ -9,18 +9,19 @@ import { map, tap } from 'rxjs/operators';
 })
 export class AuthService {
   userSignedIn$: Subject<boolean> = new Subject();
+  currentUser$ = new BehaviorSubject(null);
 
   constructor(public authService: Angular2TokenService) {
 
     this.authService.validateToken().subscribe(
-      res => res.status === 200 ? this.userSignedIn$.next(res.json().success) : this.userSignedIn$.next(false)
+      res => res.status === 200 ? this.setUser(res.json()) : this.resetUser
     );
   }
 
   logOutUser(): Observable<any> {
     return this.authService.signOut().pipe(
       map(res => {
-        this.userSignedIn$.next(false);
+        this.resetUser();
         return res;
       })
     );
@@ -30,6 +31,7 @@ export class AuthService {
     return this.authService.registerAccount(signUpData).pipe(map(
       res => {
         this.userSignedIn$.next(true);
+        this.currentUser$.next(res.json().data);
         return res;
       })
     );
@@ -40,8 +42,19 @@ export class AuthService {
     return this.authService.signIn(signInData).pipe(map(
       res => {
         this.userSignedIn$.next(true);
+        this.currentUser$.next(res.json().data);
         return res;
       }
     ));
+  }
+
+  setUser(val): void {
+    this.userSignedIn$.next(val.success);
+    this.currentUser$.next(val.data);
+  }
+
+  resetUser(): void {
+    this.userSignedIn$.next(false);
+    this.currentUser$.next(null);
   }
 }

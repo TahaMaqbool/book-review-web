@@ -8,7 +8,7 @@
     <ul class="navbar-nav mr-auto">
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a class="text-muted" routerLink="books/new">Add Book</a></li>&nbsp;&nbsp;
+      <li *ngIf="(authService.userSignedIn$ | async)"><a class="text-muted" routerLink="books/new">Add Book</a></li>&nbsp;&nbsp;
       <li *ngIf="!(authService.userSignedIn$ | async)"><a (click)="presentAuthDialog('login')" class="text-muted" href="javascript:void(0)">Login</a></li>&nbsp;&nbsp;
       <li *ngIf="(authService.userSignedIn$ | async)"><a (click)="logOut()" class="text-muted" href="javascript:void(0)">Logout</a></li>&nbsp;&nbsp;
       <li *ngIf="!(authService.userSignedIn$ | async)"><a (click)="presentAuthDialog('register')" class="text-muted" href="javascript:void(0)">Register</a></li>
