@@ -53,7 +53,6 @@ export class BookDetailComponent implements OnInit {
     this.isSubmitting = true;
     this.editBookForm.controls['id'].patchValue(this.book.id);
     const formData = this.editBookForm.value;
-    console.log('formData', formData);
     this.bookService
       .updateBook(formData)
       .subscribe(

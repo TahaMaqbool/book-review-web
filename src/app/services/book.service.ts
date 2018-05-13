@@ -13,7 +13,7 @@ export class BookService {
   api: any;
 
   constructor(private http: HttpClient) {
-    this.api = environment.api;
+    this.api = environment.token_auth_config.apiBase;
   }
 
   getBooks (): Observable<Book[]> {
@@ -26,7 +26,6 @@ export class BookService {
 
   createBook(book: Book): Observable<Book> {
     const url = this.api + '/books';
-    console.log('before submit', book);
     return this.http.post<Book>(url, book);
   }
 

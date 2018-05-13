@@ -1,4 +1,5 @@
-<h2>Books List</h2>
+<h4 *ngIf="authTokenService.currentUserData">Welcome {{authTokenService.currentUserData.name}} :)</h4>
+<br>
 <p>
   Here are some awesome books!
 </p>

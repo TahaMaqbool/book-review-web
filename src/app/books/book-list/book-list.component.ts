@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
-import {Book} from '../../models/book';
+import { Book } from '../../models/book';
+import { Angular2TokenService } from 'angular2-token';
 
 @Component({
   selector: 'app-book-list',
@@ -9,15 +10,16 @@ import {Book} from '../../models/book';
 })
 export class BookListComponent implements OnInit {
 
-  books: any;
+  books: Book[];
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService,
+              public authTokenService: Angular2TokenService) { }
 
   ngOnInit() {
     this.bookService.getBooks()
       .subscribe(data => {
-      this.books = data;
-    });
+        this.books = data;
+      });
   }
 
 }
