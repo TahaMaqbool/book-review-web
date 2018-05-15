@@ -1,4 +1,4 @@
-<h4 *ngIf="authTokenService.currentUserData">Welcome {{authTokenService.currentUserData.name}} :)</h4>
+<h4 *ngIf="(authService.currentUser$ | async)">Welcome {{ authService.currentUser$.getValue().name }} :)</h4>
 <br>
 <p>
   Here are some awesome books!
