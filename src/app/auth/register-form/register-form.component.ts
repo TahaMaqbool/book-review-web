@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {Angular2TokenService} from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
-import { PasswordValidator} from '../../shared/utils';
 
 @Component({
   selector: 'app-register-form',
