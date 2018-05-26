@@ -1,25 +1,35 @@
-<form (ngSubmit)="onSignInSubmit()" #f="ngForm" >
+<form [formGroup]="loginForm" (ngSubmit)="onSignInSubmit()">
 
-
-
-    <div class="input-field col s12">
-      <input id="email"
-             type="email"
-             required
-             name='email' [(ngModel)]="signInUser.email" class="validate">
-      <label for="email">Email</label>
+  <div class="input-field col s12">
+    <input id="email"
+           type="email"
+           formControlName="email"
+           class="validate">
+    <label for="email">Email</label>
+    <div *ngFor="let validation of account_validation_messages.email">
+      <small style="color:red"
+             *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"
+      >{{validation.message}}
+      </small>
     </div>
+  </div>
 
-
-
-
-    <div class="input-field col s12">
-      <input id="password" type="password" required  name='password' [(ngModel)]="signInUser.password" class="validate">
-      <label for="password">Password</label>
+  <div class="input-field col s12">
+    <input id="password"
+           type="password"
+           formControlName="password"
+           class="validate">
+    <label for="password">Password</label>
+    <div *ngFor="let validation of account_validation_messages.password">
+      <small style="color:red"
+             *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+      >{{validation.message}}
+      </small>
     </div>
+  </div>
 
     <div class="col s12 ">
-      <button type="submit" [disabled]="!(f.valid)" class="waves-effect waves-light btn blue right"> Login </button>
+      <button type="submit" [disabled]="!loginForm.valid" class="waves-effect waves-light btn blue right"> Login </button>
     </div>
 
 
