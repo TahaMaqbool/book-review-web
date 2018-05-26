@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {Angular2TokenService} from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
+import { PasswordValidator} from '../../shared/utils';
 
 @Component({
   selector: 'app-register-form',
@@ -20,12 +21,38 @@ export class RegisterFormComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.registerForm = this.fb.group({
-      'email': ['', Validators.required],
-      'name': ['', Validators.required],
-      'password': ['', Validators.required],
-      'passwordConfirmation': ['', Validators.required]
-    });
+       email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+       ])),
+       name: ['', Validators.required],
+       password: new FormControl('', Validators.compose([
+       Validators.required,
+       Validators.minLength(8)
+       ])),
+       passwordConfirmation: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ]))
+  });
   }
+
+  account_validation_messages = {
+    'name': [
+      { type: 'required', message: 'Name is required'}
+    ],
+    'email': [
+      { type: 'required', message: 'Email is required' },
+      { type: 'pattern', message: 'Enter a valid email' }
+    ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password is required' }
+    ],
+    'password': [
+      { type: 'required', message: 'Password is required' },
+      { type: 'minlength', message: 'Password must be at least 8 characters long' },
+    ],
+   };
 
   ngOnInit() {}
 
