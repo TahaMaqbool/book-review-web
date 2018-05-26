@@ -10,15 +10,18 @@ import { AuthService } from '../../services/auth.service';
 })
 export class BookListComponent implements OnInit {
 
+  loading = false;
   books: Book[];
 
   constructor(private bookService: BookService,
               public authService: AuthService) { }
 
   ngOnInit() {
+    this.loading = true;
     this.bookService.getBooks()
       .subscribe(data => {
         this.books = data;
+        this.loading = false;
       });
   }
 

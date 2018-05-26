@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
+  loading = false;
 
   @Output() onFormResult = new EventEmitter<any>();
 
@@ -45,14 +46,17 @@ export class LoginFormComponent implements OnInit {
 
 
   onSignInSubmit() {
+    this.loading = true;
     this.authService.logInUser(this.loginForm.value).subscribe(
       res => {
         if (res.status === 200) {
+          this.loading = false;
           this.onFormResult.emit({signedIn: true, res});
         }
       },
       err => {
         console.log('err:', err);
+        this.loading = false;
         this.onFormResult.emit({signedIn: false, err});
       }
     );

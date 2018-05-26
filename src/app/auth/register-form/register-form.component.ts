@@ -11,6 +11,7 @@ import {AuthService} from '../../services/auth.service';
 export class RegisterFormComponent implements OnInit {
 
   registerForm: FormGroup;
+  loading = false;
 
   @Output() onFormResult = new EventEmitter<any>();
 
@@ -57,12 +58,14 @@ export class RegisterFormComponent implements OnInit {
 
 
   submitForm() {
+    this.loading = true;
     this.authService.registerUser(this.registerForm.value).subscribe(
 
       (res) => {
 
         if (res.status === 200) {
           this.onFormResult.emit({signedUp: true, res});
+          this.loading = false;
         }
 
       },
@@ -70,6 +73,7 @@ export class RegisterFormComponent implements OnInit {
       (err) => {
         console.log(err.json());
         this.onFormResult.emit({signedUp: false, err});
+        this.loading = false;
       }
     );
 

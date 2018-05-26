@@ -3,6 +3,7 @@
 <p>
   Here are some awesome books!
 </p>
+<app-loader [loadingState]=loading></app-loader>
 <ul>
   <li *ngFor="let book of books"><a routerLink="/books/{{book.id}}">{{ book.title }}</a></li>
 </ul>

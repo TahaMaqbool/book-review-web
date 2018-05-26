@@ -17,6 +17,7 @@ import { AuthDialogComponent } from './auth/auth-dialog/auth-dialog.component';
 import { MaterializeModule } from 'angular2-materialize';
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { RegisterFormComponent } from './auth/register-form/register-form.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterFormComponent } from './auth/register-form/register-form.compon
     ToolbarComponent,
     AuthDialogComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
