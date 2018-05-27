@@ -18,6 +18,7 @@ import { MaterializeModule } from 'angular2-materialize';
 import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { RegisterFormComponent } from './auth/register-form/register-form.component';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoaderComponent } from './shared/loader/loader.component';
     AuthDialogComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    LoaderComponent
+    LoaderComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

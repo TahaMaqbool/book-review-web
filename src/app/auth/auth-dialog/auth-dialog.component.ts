@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, EventEmitter} from '@angular/core';
 import {ToolbarComponent} from '../../shared/toolbar/toolbar.component';
-import {MaterializeAction} from 'angular2-materialize';
+import {MaterializeAction, toast} from 'angular2-materialize';
 
 @Component({
   selector: 'app-auth-dialog',
@@ -29,16 +29,18 @@ export class AuthDialogComponent implements OnInit {
   onLoginFormResult(e) {
     if (e.signedIn) {
       this.closeDialog();
+      toast('Login Successful.', 3000, 'green');
     } else {
-      alert(e.err.json().errors[0]);
+      toast(e.err.json().errors[0], 3000, 'red');
     }
   }
 
   onRegisterFormResult(e) {
     if (e.signedUp) {
       this.closeDialog();
+      toast('You have registered successfully.', 3000, 'green');
     } else {
-      alert(e.err.json().errors.full_messages[0]);
+      toast(e.err.json().errors.full_messages[0], 3000, 'red');
     }
   }
 

@@ -18,7 +18,6 @@ export class BookDetailComponent implements OnInit {
   book: Book;
   editBookForm: FormGroup;
   edit = false;
-  bookId = +this.route.snapshot.paramMap.get('id');
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -36,12 +35,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getBook();
-  }
-
-  getBook(): void {
-    this.bookService.getBook(this.bookId)
-      .subscribe(book => this.book = book);
+    this.route.data.subscribe(({ book }) => {
+      this.book = book;
+    });
   }
 
   goBack(): void {
@@ -49,7 +45,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   deleteBook(): void {
-    this.bookService.deleteBook(this.bookId)
+    this.bookService.deleteBook(this.book.id)
       .subscribe(data => this.router.navigateByUrl('/books'));
   }
 
