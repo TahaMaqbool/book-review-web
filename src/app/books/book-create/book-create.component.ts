@@ -4,6 +4,7 @@ import {BookService} from '../../services/book.service';
 import { Router } from '@angular/router';
 import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
+import { toast } from 'angular2-materialize';
 
 @Component({
   selector: 'app-book-create',
@@ -35,14 +36,19 @@ export class BookCreateComponent implements OnInit {
     this.isSubmitting = true;
 
     const formData = this.bookForm.value;
-    formData.user_id = this.authService.currentUser$.getValue().id;
+    formData.user_id = this.authService.currentUser.value.id;
 
     this.bookService
       .createBook(formData)
       .subscribe(
-        data => this.router.navigateByUrl('/books'),
+        data => {
+          this.isSubmitting = false;
+          toast('Book created successfully.', 3000, 'green');
+          this.router.navigateByUrl('/books');
+        },
         err => {
           this.isSubmitting = false;
+          toast(err.error.message, 3000, 'red');
         }
       );
   }

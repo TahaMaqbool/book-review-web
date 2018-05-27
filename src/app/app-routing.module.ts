@@ -5,10 +5,11 @@ import {BookCreateComponent} from './books/book-create/book-create.component';
 import {BookDetailComponent} from './books/book-detail/book-detail.component';
 import {NotFoundComponent} from './shared/not-found/not-found.component';
 import {BookDetailResolver} from './books/book-detail/book-detail-resolver.service';
+import {AuthGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
   { path: 'books', component: BookListComponent },
-  { path: 'books/new', component: BookCreateComponent },
+  { path: 'books/new', component: BookCreateComponent, canActivate: [AuthGuard] },
   { path: 'books/:id', component: BookDetailComponent, resolve: { book: BookDetailResolver }},
   { path: '', redirectTo: '/books', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },

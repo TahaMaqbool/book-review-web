@@ -31,9 +31,8 @@
   <div class="col s12 ">
     <button type="submit" [disabled]="!bookForm.valid" class="btn btn-lg btn-primary pull-xs-right"> Submit </button>
   </div>
+  <div class="col s12">
+    <app-loader [loadingState]="isSubmitting"></app-loader>
+  </div>
 
-
-  <!--<button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!bookForm.valid" type="submit">-->
-      <!--Submit-->
-    <!--</button>-->
 </form>
