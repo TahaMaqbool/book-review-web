@@ -1,26 +1,26 @@
 <form [formGroup]="registerForm" (ngSubmit)="submitForm()">
-
-<div>
-    <div class="input-field col s12">
-      <input id="email"
-             type="email"
-             formControlName="email"
-             class="validate">
-      <label for="email">Email</label>
-      <div *ngFor="let validation of account_validation_messages.email">
-        <small style="color:red"
-               *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)"
-        >{{validation.message}}
-        </small>
-      </div>
-    </div>
-
+   <div class="row">
      <div class="input-field col s12">
-      <input id="name"
-           type="text"
-           formControlName="name"
-           class="validate">
-      <label for="name">Name</label>
+       <input id="email"
+              type="email"
+              formControlName="email"
+              class="validate">
+       <label for="email">Email</label>
+       <div *ngFor="let validation of account_validation_messages.email">
+         <small style="color:red"
+                *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)"
+         >{{validation.message}}
+         </small>
+       </div>
+     </div>
+   </div>
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="name"
+              type="text"
+              formControlName="name"
+              class="validate">
+       <label for="name">Name</label>
        <div *ngFor="let validation of account_validation_messages.name">
 
          <small style="color:red"
@@ -29,49 +29,53 @@
          </small>
        </div>
      </div>
+   </div>
 
-    <div class="input-field col s12">
-      <input id="password"
-             type="password"
-             formControlName="password"
-             class="validate">
-      <label for="password">Password</label>
-      <div *ngFor="let validation of account_validation_messages.password">
-        <small style="color:red"
-               *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)"
-        >{{validation.message}}
-        </small>
-      </div>
-    </div>
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="password"
+              type="password"
+              formControlName="password"
+              class="validate">
+       <label for="password">Password</label>
+       <div *ngFor="let validation of account_validation_messages.password">
+         <small style="color:red"
+                *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)"
+         >{{validation.message}}
+         </small>
+       </div>
+     </div>
+   </div>
 
+   <div class="row">
+     <div class="input-field col s12">
+       <input id="password_confirmation"
+              type="password"
+              formControlName="passwordConfirmation"
+              class="validate">
+       <label for="password_confirmation">Password confirmation</label>
+       <div *ngFor="let validation of account_validation_messages.confirm_password">
+         <small style="color:red"
+                *ngIf="registerForm.get('passwordConfirmation').hasError(validation.type) && (registerForm.get('passwordConfirmation').dirty || registerForm.get('passwordConfirmation').touched)"
+         >{{validation.message}}
+         </small>
+       </div>
+     </div>
+   </div>
 
-    <div class="input-field col s12">
-      <input id="password_confirmation"
-             type="password"
-             formControlName="passwordConfirmation"
-             class="validate">
-      <label for="password_confirmation">Password confirmation</label>
-      <div *ngFor="let validation of account_validation_messages.confirm_password">
-        <small style="color:red"
-               *ngIf="registerForm.get('passwordConfirmation').hasError(validation.type) && (registerForm.get('passwordConfirmation').dirty || registerForm.get('passwordConfirmation').touched)"
-        >{{validation.message}}
-        </small>
-      </div>
-    </div>
+   <div class="row">
+     <div class="col s12">
+       <button type="submit"
+               [disabled]="!registerForm.valid"
+               class="waves-effect waves-light btn blue right">
+         Sign up
+       </button>
+     </div>
+   </div>
 
+  <div class="row">
     <div class="col s12">
-
-      <button type="submit"
-              [disabled]="!registerForm.valid"
-              class="waves-effect waves-light btn blue right">
-        Sign up
-      </button>
+      <app-loader class="right loader-right" [loadingState]="loading"></app-loader>
     </div>
-
-  <div class="col s12">
-    <app-loader class="right" [loadingState]="loading"></app-loader>
   </div>
-
-
-</div>
 </form>
