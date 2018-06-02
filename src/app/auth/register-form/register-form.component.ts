@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {Angular2TokenService} from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
+import {CustomValidator} from '../../shared/form-helpers/custom-validator';
 
 @Component({
   selector: 'app-register-form',
@@ -21,20 +22,20 @@ export class RegisterFormComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.registerForm = this.fb.group({
-       email: new FormControl('', Validators.compose([
+      email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-       ])),
-       name: ['', Validators.required],
-       password: new FormControl('', Validators.compose([
-       Validators.required,
-       Validators.minLength(8)
-       ])),
-       passwordConfirmation: new FormControl('', Validators.compose([
+      ])),
+      name: ['', Validators.required],
+      password: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.minLength(8)
+      ])),
+      passwordConfirmation: new FormControl('', Validators.compose([
         Validators.required,
         Validators.minLength(8)
       ]))
-  });
+    }, {validator: CustomValidator.matchPasswordValidator});
   }
 
   account_validation_messages = {
@@ -45,13 +46,14 @@ export class RegisterFormComponent implements OnInit {
       { type: 'required', message: 'Email is required' },
       { type: 'pattern', message: 'Enter a valid email' }
     ],
-    'confirm_password': [
-      { type: 'required', message: 'Confirm password is required' }
-    ],
     'password': [
       { type: 'required', message: 'Password is required' },
       { type: 'minlength', message: 'Password must be at least 8 characters long' },
     ],
+    'confirm_password': [
+      { type: 'required', message: 'Confirm password is required' },
+      { type: 'mismatch', message: 'Password not match' },
+    ]
    };
 
   ngOnInit() {}
