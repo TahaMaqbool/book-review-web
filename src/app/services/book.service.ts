@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import {Category} from '../models/category';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,14 @@ export class BookService {
   deleteBook (id: number): Observable<Book> {
     const url = this.api + '/books/' + id;
     return this.http.delete<Book>(url);
+  }
+
+  getCategories(): Observable<Category[]> {
+    const url = this.api + '/categories';
+    return this.http.get<Category[]>(url)
+      .pipe(
+        map(data => data)
+      );
   }
 
 }
