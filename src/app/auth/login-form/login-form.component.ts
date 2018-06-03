@@ -23,10 +23,7 @@ export class LoginFormComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
       ])),
-      password: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.minLength(8)
-      ]))
+      password: new FormControl('', Validators.required)
     });
   }
 
@@ -36,8 +33,7 @@ export class LoginFormComponent implements OnInit {
       { type: 'pattern', message: 'Enter a valid email' }
     ],
     'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
+      { type: 'required', message: 'Password is required' }
     ]
   };
 
