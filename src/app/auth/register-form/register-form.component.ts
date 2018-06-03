@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import {Angular2TokenService} from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
 import {CustomValidator} from '../../shared/form-helpers/custom-validator';
+import {ValidationMessages} from '../../shared/form-helpers/validation-messages';
 
 @Component({
   selector: 'app-register-form',
@@ -12,6 +13,7 @@ import {CustomValidator} from '../../shared/form-helpers/custom-validator';
 export class RegisterFormComponent implements OnInit {
 
   registerForm: FormGroup;
+  validationMessages = {};
   loading = false;
 
   @Output() onFormResult = new EventEmitter<any>();
@@ -38,25 +40,7 @@ export class RegisterFormComponent implements OnInit {
     }, {validator: CustomValidator.matchPasswordValidator});
   }
 
-  account_validation_messages = {
-    'name': [
-      { type: 'required', message: 'Name is required'}
-    ],
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' },
-      { type: 'minlength', message: 'Password must be at least 8 characters long' },
-    ],
-    'confirm_password': [
-      { type: 'required', message: 'Confirm password is required' },
-      { type: 'mismatch', message: 'Password not match' },
-    ]
-   };
-
-  ngOnInit() {}
+  ngOnInit() { this.validationMessages = ValidationMessages.getValidationMessages(); }
 
 
   submitForm() {

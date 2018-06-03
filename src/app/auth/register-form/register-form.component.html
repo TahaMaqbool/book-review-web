@@ -6,7 +6,7 @@
               formControlName="email"
               class="validate">
        <label for="email">Email</label>
-       <div *ngFor="let validation of account_validation_messages.email">
+       <div *ngFor="let validation of validationMessages.email">
          <small style="color:red"
                 *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)"
          >{{validation.message}}
@@ -21,7 +21,7 @@
               formControlName="name"
               class="validate">
        <label for="name">Name</label>
-       <div *ngFor="let validation of account_validation_messages.name">
+       <div *ngFor="let validation of validationMessages.name">
 
          <small style="color:red"
                 *ngIf="registerForm.get('name').hasError(validation.type) && (registerForm.get('name').dirty || registerForm.get('name').touched)"
@@ -38,7 +38,7 @@
               formControlName="password"
               class="validate">
        <label for="password">Password</label>
-       <div *ngFor="let validation of account_validation_messages.password">
+       <div *ngFor="let validation of validationMessages.password">
          <small style="color:red"
                 *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)"
          >{{validation.message}}
@@ -54,7 +54,7 @@
               formControlName="passwordConfirmation"
               class="validate">
        <label for="password_confirmation">Password confirmation</label>
-       <div *ngFor="let validation of account_validation_messages.confirm_password">
+       <div *ngFor="let validation of validationMessages.confirm_password">
          <small style="color:red"
                 *ngIf="registerForm.get('passwordConfirmation').hasError(validation.type) && (registerForm.get('passwordConfirmation').dirty || registerForm.get('passwordConfirmation').touched)"
          >{{validation.message}}

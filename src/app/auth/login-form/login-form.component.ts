@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Angular2TokenService} from 'angular2-token';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ValidationMessages } from '../../shared/form-helpers/validation-messages';
 
 @Component({
   selector: 'app-login-form',
@@ -12,6 +13,7 @@ export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
   loading = false;
+  validationMessages: {};
 
   @Output() onFormResult = new EventEmitter<any>();
 
@@ -27,17 +29,8 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  account_validation_messages = {
-    'email': [
-      { type: 'required', message: 'Email is required' },
-      { type: 'pattern', message: 'Enter a valid email' }
-    ],
-    'password': [
-      { type: 'required', message: 'Password is required' }
-    ]
-  };
-
   ngOnInit() {
+    this.validationMessages = ValidationMessages.getValidationMessages();
   }
 
 

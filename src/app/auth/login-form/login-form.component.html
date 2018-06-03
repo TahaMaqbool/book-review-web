@@ -7,7 +7,7 @@
              formControlName="email"
              class="validate">
       <label for="email">Email</label>
-      <div *ngFor="let validation of account_validation_messages.email">
+      <div *ngFor="let validation of validationMessages.email">
         <small style="color:red"
                *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"
         >{{validation.message}}
@@ -23,7 +23,7 @@
              formControlName="password"
              class="validate">
       <label for="password">Password</label>
-      <div *ngFor="let validation of account_validation_messages.password">
+      <div *ngFor="let validation of validationMessages.password">
         <small style="color:red"
                *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"
         >{{validation.message}}
