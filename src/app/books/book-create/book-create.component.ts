@@ -17,7 +17,7 @@ export class BookCreateComponent implements OnInit {
   isSubmitting = false;
   bookForm: FormGroup;
   categories: Category[];
-  validationMessages: {};
+  validationMessages: any;
 
   constructor(
     private fb: FormBuilder,

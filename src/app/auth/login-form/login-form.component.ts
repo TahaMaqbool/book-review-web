@@ -13,7 +13,7 @@ export class LoginFormComponent implements OnInit {
 
   loginForm: FormGroup;
   loading = false;
-  validationMessages: {};
+  validationMessages: any;
 
   @Output() onFormResult = new EventEmitter<any>();
 

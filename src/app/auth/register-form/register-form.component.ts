@@ -13,7 +13,7 @@ import {ValidationMessages} from '../../shared/form-helpers/validation-messages'
 export class RegisterFormComponent implements OnInit {
 
   registerForm: FormGroup;
-  validationMessages = {};
+  validationMessages: any;
   loading = false;
 
   @Output() onFormResult = new EventEmitter<any>();
