@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import { toast } from 'angular2-materialize';
 import {Category} from '../../models/category';
+import {ValidationMessages} from '../../shared/form-helpers/validation-messages';
 
 @Component({
   selector: 'app-book-create',
@@ -16,6 +17,7 @@ export class BookCreateComponent implements OnInit {
   isSubmitting = false;
   bookForm: FormGroup;
   categories: Category[];
+  validationMessages: {};
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +37,7 @@ export class BookCreateComponent implements OnInit {
     this.route.data.subscribe(({ categories }) => {
       this.categories = categories;
     });
+    this.validationMessages = ValidationMessages.getValidationMessages();
   }
 
   submitForm() {

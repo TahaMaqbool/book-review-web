@@ -16,6 +16,18 @@ export class ValidationMessages {
       'confirm_password': [
         { type: 'required', message: 'Confirm password is required' },
         { type: 'mismatch', message: 'Password not match' },
+      ],
+      'title': [
+        { type: 'required', message: 'Title is required'}
+      ],
+      'description': [
+        { type: 'required', message: 'Description is required'}
+      ],
+      'author': [
+        { type: 'required', message: 'Author is required'}
+      ],
+      'category': [
+        { type: 'required', message: 'Category is required'}
       ]
     };
   }

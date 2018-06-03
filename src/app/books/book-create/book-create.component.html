@@ -3,15 +3,22 @@
   <form [formGroup]="bookForm" (ngSubmit)="submitForm()">
 
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col s12">
         <select
-          id="selectExample"
+          id="selectCategory"
+          class="validate"
           [materializeSelectOptions]="categories"
           formControlName="category_id"
           materialize="material_select">
           <option value="" disabled selected>Select Category</option>
           <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>
+        <div *ngFor="let validation of validationMessages.category">
+          <small class="field-error"
+                 *ngIf="bookForm.get('category_id').hasError(validation.type) && (bookForm.get('category_id').dirty || bookForm.get('category_id').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
       </div>
     </div>
 
@@ -19,10 +26,15 @@
       <div class="input-field col s12">
         <input id="title"
                formControlName="title"
-               type="email"
-               required
+               type="text"
                class="validate">
         <label for="title">Title</label>
+        <div *ngFor="let validation of validationMessages.title">
+          <small class="field-error"
+                 *ngIf="bookForm.get('title').hasError(validation.type) && (bookForm.get('title').dirty || bookForm.get('title').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
       </div>
     </div>
 
@@ -31,9 +43,14 @@
         <input id="description"
                formControlName="description"
                type="text"
-               required
                class="validate">
         <label for="description">Description</label>
+        <div *ngFor="let validation of validationMessages.description">
+          <small class="field-error"
+                 *ngIf="bookForm.get('description').hasError(validation.type) && (bookForm.get('description').dirty || bookForm.get('description').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
       </div>
     </div>
 
@@ -42,8 +59,13 @@
         <input id="author"
                formControlName="author"
                type="text"
-               required
                class="validate">
+        <div *ngFor="let validation of validationMessages.author">
+          <small class="field-error"
+                 *ngIf="bookForm.get('author').hasError(validation.type) && (bookForm.get('author').dirty || bookForm.get('author').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
         <label for="author">Author</label>
       </div>
     </div>

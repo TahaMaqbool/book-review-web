@@ -4,3 +4,8 @@
 .loader-right {
   margin-right: 30px;
 }
+
+
+.field-error {
+  color: red;
+}
