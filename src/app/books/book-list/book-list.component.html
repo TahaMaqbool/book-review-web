@@ -4,6 +4,7 @@
   Here are some awesome books!
 </p>
 <app-loader [loadingState]=loading></app-loader>
+<p *ngIf="books === undefined || books.length == 0">No record found!</p>
 <ul>
   <li *ngFor="let book of books"><a routerLink="/books/{{book.id}}">{{ book.title }}</a></li>
 </ul>

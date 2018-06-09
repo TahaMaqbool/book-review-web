@@ -1,0 +1,7 @@
+ul.dropdown-content li a {
+  color: #000;
+}
+
+ul.dropdown-content li a.active {
+  background-color: #A9A9A9;
+}

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import {Book} from '../models/book';
 import {environment} from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import {Category} from '../models/category';
+import {User} from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,21 @@ export class BookService {
 
   api: any;
 
+  private category = new BehaviorSubject<Category>(null);
+  selectedCategory = this.category.asObservable();
+
   constructor(private http: HttpClient) {
     this.api = environment.token_auth_config.apiBase;
   }
 
-  getBooks (): Observable<Book[]> {
-    const url = this.api + '/books';
+  changeCategory(category: Category) {
+    this.category.next(category);
+  }
+
+  getBooks(category: Category): Observable<Book[]> {
+    let url = this.api + '/books';
+    const query = category === null ? '' : '?category=' + category.name;
+    url = url + query;
     return this.http.get<Book[]>(url)
       .pipe(
         map(data => data)

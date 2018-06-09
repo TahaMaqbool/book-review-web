@@ -8,6 +8,18 @@
     <ul class="navbar-nav mr-auto">
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <li>
+        <a materialize="dropdown"
+           class='dropdown-button text-muted'
+           href='javascript:void(0)'
+           data-activates='dropdown1'>Category<i style="margin-left: 7px;" class="fa fa-angle-down"></i></a>
+        <ul id='dropdown1' class='dropdown-content'>
+          <li *ngFor="let category of categories">
+            <a href="javascript:void(0)"
+               [ngClass]="{'active': category.isSelected}"
+               (click)="categoryChange(category)">{{ category.name }}</a></li>
+        </ul>
+      </li>
       <li *ngIf="(authService.userSignedIn | async)"><a class="text-muted" routerLink="books/new">Add Book</a></li>&nbsp;&nbsp;
       <li *ngIf="!(authService.userSignedIn | async)"><a (click)="presentAuthDialog('login')" class="text-muted" href="javascript:void(0)">Login</a></li>&nbsp;&nbsp;
       <li *ngIf="(authService.userSignedIn | async)"><a (click)="logOut()" class="text-muted" href="javascript:void(0)">Logout</a></li>&nbsp;&nbsp;
