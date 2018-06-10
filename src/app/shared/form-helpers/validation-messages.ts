@@ -28,6 +28,9 @@ export class ValidationMessages {
       ],
       'category': [
         { type: 'required', message: 'Category is required'}
+      ],
+      'file': [
+        { type: 'required', message: 'File is required'}
       ]
     };
   }

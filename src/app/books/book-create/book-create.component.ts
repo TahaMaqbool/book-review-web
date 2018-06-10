@@ -18,6 +18,7 @@ export class BookCreateComponent implements OnInit {
   bookForm: FormGroup;
   categories: Category[];
   validationMessages: any;
+  fileToUpload: File = null;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +29,7 @@ export class BookCreateComponent implements OnInit {
     this.bookForm = this.fb.group({
       'title': ['', Validators.required],
       'description': ['', Validators.required],
+      'book_img': [null, Validators.required],
       'category_id': ['', Validators.required],
       'author': ['', Validators.required]
     });
@@ -40,11 +42,16 @@ export class BookCreateComponent implements OnInit {
     this.validationMessages = ValidationMessages.getValidationMessages();
   }
 
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.bookForm.get('book_img').patchValue(this.fileToUpload);
+  }
+
   submitForm() {
     this.isSubmitting = true;
 
-    const formData = this.bookForm.value;
-    formData.user_id = this.authService.currentUser.value.id;
+    const formData = this.getFormData(this.bookForm.value);
+    formData.append('user_id', this.authService.currentUser.value.id.toString());
 
     this.bookService
       .createBook(formData)
@@ -59,5 +66,11 @@ export class BookCreateComponent implements OnInit {
           toast(err.error.message, 3000, 'red');
         }
       );
+  }
+
+  getFormData(object) {
+    const formData = new FormData();
+    Object.keys(object).forEach(key => formData.append(key, object[key]));
+    return formData;
   }
 }

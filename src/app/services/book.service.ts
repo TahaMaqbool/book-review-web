@@ -35,7 +35,7 @@ export class BookService {
       );
   }
 
-  createBook(book: Book): Observable<Book> {
+  createBook(book: any): Observable<Book> {
     const url = this.api + '/books';
     return this.http.post<Book>(url, book);
   }
