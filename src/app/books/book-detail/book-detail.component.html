@@ -1,9 +1,17 @@
-<i class="fa fa-arrow-left back-icon" (click)="goBack()"></i>
+<!--<i class="fa fa-arrow-left back-icon" (click)="goBack()"></i>-->
 
-<div *ngIf="book && !edit">
-<h2>{{ book.title }}</h2>
-<h3>{{ book.author }}</h3>
-<p>{{ book.description }}</p>
+<div *ngIf="book && !edit" class="row">
+
+  <div class="col-md-4">
+    <img class="img-responsive book-show" [src]="book.book_img.original" alt="book image">
+  </div>
+
+  <div class="col-md-8">
+    <h2>{{ book.title }}</h2>
+    <h3>{{ book.author }}</h3>
+    <p>{{ book.description }}</p>
+  </div>
+
 </div>
 
 <div *ngIf="edit && book">
@@ -38,7 +46,13 @@
   </form>
 </div>
 
-<div class="btn-toolbar" *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id">
-  <button type="button" class="btn btn-primary active" (click)="edit=true; isSubmitting = false">Edit</button>
-  <button type="button" class="btn btn-danger active btn-space" (click)="deleteBook()">Delete</button>
+<div class="btn-toolbar row" *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id">
+
+  <div class="col-md-12">
+
+    <button type="button" class="btn btn-primary active" (click)="edit=true; isSubmitting = false">Edit</button>
+    <button type="button" class="btn btn-danger active btn-space" (click)="deleteBook()">Delete</button>
+
+  </div>
+
 </div>
