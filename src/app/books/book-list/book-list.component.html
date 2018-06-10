@@ -4,13 +4,18 @@
   Here are some awesome books!
 </p>
 <app-loader [loadingState]=loading></app-loader>
-<p *ngIf="books === undefined || books.length == 0">No record found!</p>
 
-<div class="row">
-  <a *ngFor="let book of books" routerLink="/books/{{book.id}}">
-    <div class="col-md-3">
-      <img class="img-responsive book" [src]="book.book_img.medium" alt="book image">
-    </div>
-  </a>
+<div *ngIf="books">
+
+  <p *ngIf="books === undefined || books.length == 0 && !loading">No record found!</p>
+
+  <div class="row">
+    <a *ngFor="let book of books" routerLink="/books/{{book.id}}">
+      <div class="col-md-3">
+        <img class="img-responsive book" [src]="book.book_img.medium" alt="book image">
+      </div>
+    </a>
+  </div>
+
 </div>
 
