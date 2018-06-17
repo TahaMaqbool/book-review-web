@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -9,7 +9,7 @@ import {AuthService} from '../../services/auth.service';
 import {ValidationMessages} from '../../shared/form-helpers/validation-messages';
 import {Category} from '../../models/category';
 import {DomSanitizer} from '@angular/platform-browser';
-import {toast} from 'angular2-materialize';
+import {MaterializeAction, toast} from 'angular2-materialize';
 
 @Component({
   selector: 'app-book-detail',
@@ -18,6 +18,7 @@ import {toast} from 'angular2-materialize';
 })
 export class BookDetailComponent {
 
+  deleteBookModal = new EventEmitter<string|MaterializeAction>();
   isSubmitting = false;
   book: Book;
   editBookForm: FormGroup;
@@ -45,6 +46,13 @@ export class BookDetailComponent {
     });
   }
 
+  openBookModal() {
+    this.deleteBookModal.emit({action: 'modal', params: ['open']});
+  }
+  closeBookModal() {
+    this.deleteBookModal.emit({action: 'modal', params: ['close']});
+  }
+
   getBook() {
     this.route.data.subscribe(({ book }) => {
       this.book = book;
@@ -68,8 +76,13 @@ export class BookDetailComponent {
   }
 
   deleteBook(): void {
+    this.isSubmitting = true;
     this.bookService.deleteBook(this.book.id)
-      .subscribe(data => this.router.navigateByUrl('/books'));
+      .subscribe(data => {
+        this.isSubmitting = false;
+        toast('Book deleted successfully.', 3000, 'green');
+        this.router.navigateByUrl('/books');
+      });
   }
 
   submitForm() {
@@ -82,6 +95,7 @@ export class BookDetailComponent {
         data => {
           this.updateBook();
           toast('Book information updated successfully.', 3000, 'green');
+          this.isSubmitting = false;
           this.edit = false;
         },
         err => {

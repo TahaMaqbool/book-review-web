@@ -1,4 +1,17 @@
 <!--<i class="fa fa-arrow-left back-icon" (click)="goBack()"></i>-->
+<!-- Modal Structure -->
+<div class="row">
+  <div id="book-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="deleteBookModal">
+    <div class="modal-content">
+      <h4>Delete Book</h4>
+      <p>Are you sure you want to delete this book?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat" (click)="closeBookModal()">Close</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="deleteBook()">Agree</a>
+    </div>
+  </div>
+</div>
 
 <div *ngIf="book && !edit" class="row">
 
@@ -10,6 +23,7 @@
     <h2>{{ book.title }}</h2>
     <h3>{{ book.author }}</h3>
     <p>{{ book.description }}</p>
+    <app-loader class="loader-align-right" [loadingState]="isSubmitting"></app-loader>
   </div>
 
 </div>
@@ -109,13 +123,22 @@
   </form>
 </div>
 
-<div class="btn-toolbar row" *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id">
-
+<div class="btn-toolbar row">
   <div class="col-md-12">
 
-    <button type="button" class="btn btn-secondary active" (click)="goBack()">Back</button>
-    <button type="button" class="btn btn-primary active btn-space" (click)="edit=true; isSubmitting = false">Edit</button>
-    <button type="button" class="btn btn-danger active btn-space" (click)="deleteBook()">Delete</button>
+    <button [disabled]="isSubmitting" type="button" class="btn btn-secondary active" (click)="goBack()">Back</button>
+    <button
+      *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id"
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-primary active btn-space"
+      (click)="edit=true; isSubmitting = false">Edit</button>
+    <button
+      *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id"
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-danger active btn-space"
+      (click)="openBookModal()">Delete</button>
 
   </div>
 
