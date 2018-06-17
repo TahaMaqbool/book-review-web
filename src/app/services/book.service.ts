@@ -40,8 +40,8 @@ export class BookService {
     return this.http.post<Book>(url, book);
   }
 
-  updateBook(book: Book): Observable<Book> {
-    const url = this.api + '/books/' + book.id;
+  updateBook(book: any): Observable<Book> {
+    const url = this.api + '/books/' + book.get('id');
     return this.http.put<Book>(url, book);
   }
 

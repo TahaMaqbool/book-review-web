@@ -16,7 +16,11 @@ const routes: Routes = [
     resolve: { categories: CategoryResolver },
     canActivate: [AuthGuard]
   },
-  { path: 'books/:id', component: BookDetailComponent, resolve: { book: BookDetailResolver }},
+  {
+    path: 'books/:id',
+    component: BookDetailComponent,
+    resolve: { book: BookDetailResolver, categories: CategoryResolver }
+  },
   { path: '', redirectTo: '/books', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },
   { path: '**', component: NotFoundComponent }

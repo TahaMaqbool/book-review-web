@@ -13,6 +13,7 @@
           <option value="" disabled selected>Select Category</option>
           <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
         </select>
+        <label for="selectCategory">Category</label>
         <div *ngFor="let validation of validationMessages.category">
           <small class="field-error"
                  *ngIf="bookForm.get('category_id').hasError(validation.type) && (bookForm.get('category_id').dirty || bookForm.get('category_id').touched)"

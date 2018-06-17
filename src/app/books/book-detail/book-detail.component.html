@@ -3,7 +3,7 @@
 <div *ngIf="book && !edit" class="row">
 
   <div class="col-md-4">
-    <img class="img-responsive book-show" [src]="book.book_img.original" alt="book image">
+    <img class="img-responsive book-show" [src]="book.book_img.url.original" alt="book image">
   </div>
 
   <div class="col-md-8">
@@ -15,34 +15,97 @@
 </div>
 
 <div *ngIf="edit && book">
+  <h4>Edit Book</h4>
   <form [formGroup]="editBookForm" (ngSubmit)="submitForm()">
-    <fieldset [disabled]="isSubmitting">
-      <fieldset class="form-group">
-        <input
-          formControlName="title"
-          [(ngModel)]="book.title"
-          placeholder="Title"
-          type="text"
-        />
-      </fieldset>
-      <fieldset class="form-group">
-        <input
-          formControlName="author"
-          [(ngModel)]="book.author"
-          placeholder="Author"
-          type="text" />
-      </fieldset>
-      <fieldset class="form-group">
-        <input
-          formControlName="description"
-          placeholder="Description"
-          [(ngModel)]="book.description"
-          type="text" />
-      </fieldset>
-      <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!editBookForm.valid" type="submit">
-        Submit
-      </button>
-    </fieldset>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <select
+          id="selectCategory"
+          class="validate"
+          [materializeSelectOptions]="categories"
+          formControlName="category_id"
+          materialize="material_select">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+        </select>
+        <label for="selectCategory">Category</label>
+        <div *ngFor="let validation of validationMessages.category">
+          <small class="field-error"
+                 *ngIf="editBookForm.get('category_id').hasError(validation.type) && (editBookForm.get('category_id').dirty || editBookForm.get('category_id').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <input type="file"
+             id="file"
+             class="validate"
+             (change)="handleFileInput($event.target.files)">
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="title"
+               formControlName="title"
+               type="text"
+               class="validate">
+        <label for="title">Title</label>
+        <div *ngFor="let validation of validationMessages.title">
+          <small class="field-error"
+                 *ngIf="editBookForm.get('title').hasError(validation.type) && (editBookForm.get('title').dirty || editBookForm.get('title').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="description"
+               formControlName="description"
+               type="text"
+               class="validate">
+        <label for="description">Description</label>
+        <div *ngFor="let validation of validationMessages.description">
+          <small class="field-error"
+                 *ngIf="editBookForm.get('description').hasError(validation.type) && (editBookForm.get('description').dirty || editBookForm.get('description').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="author"
+               formControlName="author"
+               type="text"
+               class="validate">
+        <div *ngFor="let validation of validationMessages.author">
+          <small class="field-error"
+                 *ngIf="editBookForm.get('author').hasError(validation.type) && (editBookForm.get('author').dirty || editBookForm.get('author').touched)"
+          >{{validation.message}}
+          </small>
+        </div>
+        <label for="author">Author</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 ">
+        <button
+          type="submit"
+          [disabled]="!editBookForm.valid || isSubmitting"
+          class="btn btn-lg btn-primary pull-xs-right">Submit </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <app-loader class="loader-align-right" [loadingState]="isSubmitting"></app-loader>
+      </div>
+    </div>
   </form>
 </div>
 

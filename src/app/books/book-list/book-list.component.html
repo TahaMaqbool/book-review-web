@@ -12,7 +12,7 @@
   <div class="row">
     <a *ngFor="let book of books" routerLink="/books/{{book.id}}">
       <div class="col-md-3">
-        <img class="img-responsive book" [src]="book.book_img.medium" alt="book image">
+        <img class="img-responsive book" [src]="book.book_img.url.medium" alt="book image">
       </div>
     </a>
   </div>
