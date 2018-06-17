@@ -40,7 +40,7 @@ export class BookDetailComponent {
       'title': [this.book.title, Validators.required],
       'description': [this.book.description, Validators.required],
       'author': [this.book.author, Validators.required],
-      'book_img': [this.book.book_img.url.original, Validators.required],
+      'book_img': ['', Validators.required],
       'category_id': [this.book.category_id, Validators.required],
     });
   }
