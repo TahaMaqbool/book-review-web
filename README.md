@@ -1,27 +1,52 @@
-# BookReviewWeb
+# Book Review Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
 
-## Development server
+## Development server setup for Ubuntu
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Install NodeJS using the following steps:
 
-## Code scaffolding
+`sudo apt-get update`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+`cd ~`
 
-## Build
+`curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+You can inspect the contents of this script with nano (or your preferred text editor):
 
-## Running unit tests
+`nano nodesource_setup.sh`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`sudo bash nodesource_setup.sh`
 
-## Running end-to-end tests
+`sudo apt-get install nodejs`
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+To check which version of Node.js you have installed after these initial steps, type:
 
-## Further help
+`nodejs -v`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+`Output
+ v8.10.0
+`
+
+`mkdir projects`
+
+`cd projects`
+
+`git clone git@github.com:TahaMaqbool/book-review-web.git`
+
+`cd book-review-web`
+
+To Install project dependencies:
+
+`npm install`
+
+Before running development server. Update `environment.ts` file. Under `production: false,` write 
+`token_auth_config: {
+ apiBase: 'http://[Your_Server_IP]:3000/api/v1'
+ }`
+
+
+Now run the following command:
+
+`npm start`
+
+Open browser and visit `localhost:4200`
