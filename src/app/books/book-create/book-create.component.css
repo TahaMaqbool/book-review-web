@@ -5,3 +5,8 @@
 .book-body {
   margin-left: 10px;
 }
+
+.modal {
+  width: 28% !important;
+  height: 33% !important;
+}

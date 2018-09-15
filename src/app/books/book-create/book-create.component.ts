@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import {BookService} from '../../services/book.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
-import { toast } from 'angular2-materialize';
 import {Category} from '../../models/category';
 import {ValidationMessages} from '../../shared/form-helpers/validation-messages';
+import {MaterializeAction, toast} from 'angular2-materialize';
 
 @Component({
   selector: 'app-book-create',
@@ -19,6 +19,7 @@ export class BookCreateComponent implements OnInit {
   categories: Category[];
   validationMessages: any;
   fileToUpload: File = null;
+  modalActions = new EventEmitter<string|MaterializeAction>();
 
   constructor(
     private fb: FormBuilder,
@@ -58,14 +59,18 @@ export class BookCreateComponent implements OnInit {
       .subscribe(
         data => {
           this.isSubmitting = false;
-          toast('Book created successfully.', 3000, 'green');
-          this.router.navigateByUrl('/books');
+          this.modalActions.emit({action: 'modal', params: ['open']});
         },
         err => {
           this.isSubmitting = false;
           toast(err.error.message, 3000, 'red');
         }
       );
+  }
+
+  closeModal() {
+    this.modalActions.emit({action: 'modal', params: ['close']});
+    this.router.navigateByUrl('/books');
   }
 
   getFormData(object) {

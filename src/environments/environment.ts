@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  api: 'http://192.168.8.104:3000'
+  token_auth_config: {
+    apiBase: 'http://192.168.8.106:3000/api/v1'
+  }
 };
 
 /*

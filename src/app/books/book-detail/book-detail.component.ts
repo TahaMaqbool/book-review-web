@@ -19,6 +19,7 @@ import {MaterializeAction, toast} from 'angular2-materialize';
 export class BookDetailComponent {
 
   deleteBookModal = new EventEmitter<string|MaterializeAction>();
+  bookActionModal = new EventEmitter<string|MaterializeAction>();
   isSubmitting = false;
   book: Book;
   editBookForm: FormGroup;
@@ -26,6 +27,8 @@ export class BookDetailComponent {
   categories: Category[];
   validationMessages: any;
   fileToUpload: File = null;
+  approvalMode = 'approve';
+  isAdmin = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -44,13 +47,23 @@ export class BookDetailComponent {
       'book_img': ['', Validators.required],
       'category_id': [this.book.category_id, Validators.required],
     });
+    this.approvalMode = this.book.is_approved ? 'reject' : 'approve';
   }
 
   openBookModal() {
     this.deleteBookModal.emit({action: 'modal', params: ['open']});
   }
+
   closeBookModal() {
     this.deleteBookModal.emit({action: 'modal', params: ['close']});
+  }
+
+  openBookActionModal() {
+    this.bookActionModal.emit({action: 'modal', params: ['open']});
+  }
+
+  closeBookActionModal() {
+    this.bookActionModal.emit({action: 'modal', params: ['close']});
   }
 
   getBook() {
@@ -81,6 +94,16 @@ export class BookDetailComponent {
       .subscribe(data => {
         this.isSubmitting = false;
         toast('Book deleted successfully.', 3000, 'green');
+        this.router.navigateByUrl('/books');
+      });
+  }
+
+  bookAction(): void {
+    this.isSubmitting = true;
+    this.bookService.changeBookStatus(this.book, this.approvalMode)
+      .subscribe(data => {
+        this.isSubmitting = false;
+        toast('Book '  + this.approvalMode + 'ed successfully.', 3000, 'green');
         this.router.navigateByUrl('/books');
       });
   }

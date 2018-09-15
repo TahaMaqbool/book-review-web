@@ -92,3 +92,14 @@
     </div>
   </form>
 </div>
+
+<div class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
+  <div class="modal-content">
+    <h4>Pending Approval</h4>
+    <p>Thank you for submitting the book. The book will be added after an admin approval.</p>
+  </div>
+  <div class="modal-footer">
+    <a (click)="closeModal()" class="modal-close waves-effect waves-green btn-flat">OK</a>
+  </div>
+</div>
+

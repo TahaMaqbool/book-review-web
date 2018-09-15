@@ -13,6 +13,19 @@
   </div>
 </div>
 
+<div class="row">
+  <div id="book-action-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="bookActionModal">
+    <div class="modal-content">
+      <h4>{{ approvalMode | titlecase }} Book</h4>
+      <p>Are you sure you want to {{ approvalMode }} this book?</p>
+    </div>
+    <div class="modal-footer">
+      <a class="waves-effect waves-green btn-flat" (click)="closeBookActionModal()">Close</a>
+      <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="bookAction()">Agree</a>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="book && !edit" class="row">
 
   <div class="col-md-4">
@@ -139,7 +152,13 @@
       type="button"
       class="btn btn-danger active btn-space"
       (click)="openBookModal()">Delete</button>
-
+    <button
+      *ngIf="!edit && book && (authService.currentUser | async) && isAdmin"
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn btn-success active btn-space"
+      [ngClass]="{'btn-success' : approvalMode === 'approve', 'btn-warning' : approvalMode === 'reject'}"
+      (click)="openBookActionModal()">{{ approvalMode }}</button>
   </div>
 
 </div>
