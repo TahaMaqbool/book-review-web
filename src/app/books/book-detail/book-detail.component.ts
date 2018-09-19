@@ -28,7 +28,6 @@ export class BookDetailComponent {
   validationMessages: any;
   fileToUpload: File = null;
   approvalMode = 'approve';
-  isAdmin = true;
 
   constructor(private route: ActivatedRoute,
               private router: Router,

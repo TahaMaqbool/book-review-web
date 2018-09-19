@@ -33,7 +33,7 @@ export class BookService {
     const query = category === null ? '' : '?category=' + category.name;
     url = url + query;
 
-    return this.http.get(url)
+    return this.http.get(url, true)
       .pipe(
         map(data => data)
       );
@@ -56,7 +56,7 @@ export class BookService {
 
   getBook (id: number): Observable<Book> {
     const url = '/books/' + id;
-    return this.http.get(url)
+    return this.http.get(url, true)
       .pipe(
         map(data => data)
       );

@@ -7,4 +7,5 @@ export class User {
   nickname: string;
   provider: string;
   uid: string;
+  admin: boolean;
 }

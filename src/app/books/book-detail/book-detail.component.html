@@ -141,19 +141,19 @@
 
     <button [disabled]="isSubmitting" type="button" class="btn btn-secondary active" (click)="goBack()">Back</button>
     <button
-      *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id"
+      *ngIf="((!edit && book) && (authService.currentUser | async)) && (authService.currentUser.value.id == book.user_id) || authService.currentUser.value.admin"
       [disabled]="isSubmitting"
       type="button"
       class="btn btn-primary active btn-space"
       (click)="edit=true; isSubmitting = false">Edit</button>
     <button
-      *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.id == book.user_id"
+      *ngIf="((!edit && book) && (authService.currentUser | async)) && (authService.currentUser.value.id == book.user_id) || authService.currentUser.value.admin"
       [disabled]="isSubmitting"
       type="button"
       class="btn btn-danger active btn-space"
       (click)="openBookModal()">Delete</button>
     <button
-      *ngIf="!edit && book && (authService.currentUser | async) && isAdmin"
+      *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser.value.admin"
       [disabled]="isSubmitting"
       type="button"
       class="btn btn-success active btn-space"

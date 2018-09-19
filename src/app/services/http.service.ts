@@ -24,6 +24,7 @@ export class HttpService {
 
   get(url: string, requestHeaders: Boolean = false): Observable<any> {
     url = this.api + url;
+    this.updateHeaders();
     const headers = this.headers;
     if (requestHeaders) {
       return this.http.get(url, {headers, observe: 'response'})
@@ -40,24 +41,28 @@ export class HttpService {
 
   post(url: string, formData: {}): Observable<any> {
     url = this.api + url;
+    this.updateHeaders();
     const headers = this.headers;
     return this.http.post(url, formData, {headers, observe: 'response'});
   }
 
   put(url: string, formData: FormData): Observable<any> {
     url = this.api + url + formData.get('id');
+    this.updateHeaders();
     const headers = this.headers;
     return this.http.put(url, formData, {headers, observe: 'response'});
   }
 
   patch(url: string): Observable<any> {
     url = this.api + url;
+    this.updateHeaders();
     const headers = this.headers;
     return this.http.put(url, {}, {headers, observe: 'response'});
   }
 
   delete (url: string, id: number): Observable<any> {
     url = this.api + url + id;
+    this.updateHeaders();
     const headers = this.headers;
     return this.http.delete(url, {headers, observe: 'response'});
   }
@@ -68,8 +73,14 @@ export class HttpService {
     if (accessToken) { this.setLocalStorage('accessToken', accessToken); }
   }
 
-  updateToken() {
-    this.headers.append('access-token', localStorage.getItem('accessToken'));
+  updateHeaders() {
+    this.headers = new HttpHeaders({
+        'client': localStorage.getItem('client') || '',
+        'uid': localStorage.getItem('uid') || '',
+        'token-type': localStorage.getItem('tokenType') || '',
+        'access-token': localStorage.getItem('accessToken') || ''
+      }
+    );
   }
 
   setLocalStorage(key: string, data: string) {
