@@ -16,8 +16,19 @@
         <ul id='dropdown1' class='dropdown-content'>
           <li *ngFor="let category of categories">
             <a href="javascript:void(0)"
+               [routerLink]=""
+               [queryParams]="{ 'category': category.name }"
                [ngClass]="{'active': category.isSelected}"
-               (click)="categoryChange(category)">{{ category.name }}</a></li>
+               (click)="categoryChange(category)">{{ category.name }}
+            </a>
+          </li>
+          <li>
+            <a
+              href="javascript:void(0)"
+              [ngClass]="{'active': isAllSelected}"
+              (click)="resetFilter()">All
+            </a>
+          </li>
         </ul>
       </li>
       <li *ngIf="(authService.userSignedIn | async)"><a class="text-muted" routerLink="books/new">Add Book</a></li>&nbsp;&nbsp;

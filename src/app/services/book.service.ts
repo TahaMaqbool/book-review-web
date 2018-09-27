@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Book} from '../models/book';
 import {BehaviorSubject, Observable} from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {Category} from '../models/category';
 import {HttpService} from './http.service';
 
@@ -10,13 +10,13 @@ import {HttpService} from './http.service';
 })
 export class BookService {
 
-  private category = new BehaviorSubject<Category>(null);
+  private category = new BehaviorSubject<string>(null);
   selectedCategory = this.category.asObservable();
 
   constructor(private http: HttpService) {
   }
 
-  changeCategory(category: Category) {
+  changeCategory(category: string) {
     this.category.next(category);
   }
 
@@ -28,9 +28,9 @@ export class BookService {
       );
   }
 
-  getBooks(category: Category): Observable<Book[]> {
+  getBooks(category: string): Observable<Book[]> {
     let url: any = '/books';
-    const query = category === null ? '' : '?category=' + category.name;
+    const query = category === null || category === undefined ? '' : '?category=' + category;
     url = url + query;
 
     return this.http.get(url, true)

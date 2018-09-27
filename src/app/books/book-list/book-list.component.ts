@@ -1,25 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
 import { AuthService } from '../../services/auth.service';
-import {Category} from '../../models/category';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-list',
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
 
   loading = false;
   books: Book[];
-  selectedCategory: Category;
+  selectedCategory: string;
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private bookService: BookService,
-              public authService: AuthService) { }
+              public authService: AuthService) {
+  }
 
   ngOnInit() {
-    this.bookService.selectedCategory.subscribe(
+    this.bookService.selectedCategory
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
       category => {
         this.selectedCategory = category;
         this.getBooks();
@@ -36,4 +41,9 @@ export class BookListComponent implements OnInit {
       });
   }
 
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+    this.bookService.changeCategory(null);
+  }
 }
