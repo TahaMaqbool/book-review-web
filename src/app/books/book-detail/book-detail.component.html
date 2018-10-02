@@ -28,11 +28,11 @@
 
 <div *ngIf="book && !edit" class="row">
 
-  <div class="col-md-4">
+  <div class="col m4">
     <img class="img-responsive book-show" [src]="book.book_img.url.original" alt="book image">
   </div>
 
-  <div class="col-md-8">
+  <div class="col m8">
     <h2>{{ book.title }}</h2>
     <h3>{{ book.author }}</h3>
     <p>{{ book.description }}</p>
@@ -136,28 +136,34 @@
   </form>
 </div>
 
-<div class="btn-toolbar row">
-  <div class="col-md-12">
+<div class="row">
+  <div class="col m12">
 
-    <button [disabled]="isSubmitting" type="button" class="btn btn-secondary active" (click)="goBack()">Back</button>
+    <button
+      *ngIf="!edit"
+      [disabled]="isSubmitting"
+      type="button"
+      class="btn grey darken-3 active"
+      (click)="goBack()">Back
+    </button>
     <button
       *ngIf="((!edit && book) && (authService.currentUser | async)) && (authService.currentUser.value.id == book.user_id) || authService.currentUser?.value?.admin"
       [disabled]="isSubmitting"
       type="button"
-      class="btn btn-primary active btn-space"
+      class="btn blue darken-2 btn-space"
       (click)="edit=true; isSubmitting = false">Edit</button>
     <button
       *ngIf="((!edit && book) && (authService.currentUser | async)) && (authService.currentUser.value.id == book.user_id) || authService.currentUser?.value?.admin"
       [disabled]="isSubmitting"
       type="button"
-      class="btn btn-danger active btn-space"
+      class="btn red darken-3 btn-space"
       (click)="openBookModal()">Delete</button>
     <button
       *ngIf="!edit && book && (authService.currentUser | async) && authService.currentUser?.value?.admin"
       [disabled]="isSubmitting"
       type="button"
-      class="btn btn-success active btn-space"
-      [ngClass]="{'btn-success' : approvalMode === 'approve', 'btn-warning' : approvalMode === 'reject'}"
+      class="btn btn-space"
+      [ngClass]="{'green darken-2' : approvalMode === 'approve', 'red lighten-1' : approvalMode === 'reject'}"
       (click)="openBookActionModal()">{{ approvalMode }}</button>
   </div>
 
