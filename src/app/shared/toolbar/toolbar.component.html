@@ -22,7 +22,8 @@
       <a routerLink="/" class="brand-logo black-text">Book Review</a>
       <ul class="right">
         <li *ngIf="(authService.userSignedIn | async)"><a class="black-text" routerLink="books/new">Add Book</a></li>
-        <li *ngIf="!(authService.userSignedIn | async)"><a class="black-text" (click)="presentAuthDialog('login')">Login</a></li>
+        <li *ngIf="!(authService.userSignedIn | async)"><a routerLink="/login" class="black-text">Login</a></li>
+        <li *ngIf="!(authService.userSignedIn | async)"><a routerLink="/register" class="black-text">Register</a></li>
         <li *ngIf="(authService.userSignedIn | async)"><a class="black-text" (click)="logOut()">Logout</a></li>
         <li>
           <a materialize="dropdown"

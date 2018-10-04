@@ -1,0 +1,77 @@
+<div>
+  <div class="container">
+    <div class="row">
+      <div class="col m6 offset-m3 col s12">
+        <h1>{{ title }}</h1>
+        <p>
+          <a [routerLink]="['/login']" *ngIf="authType == 'register'">Have an account?</a>
+          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
+        </p>
+        <form [formGroup]="authForm" (ngSubmit)="submitForm()">
+          <div>
+            <div class="input-field">
+              <input id="user-email"
+                     type="email"
+                     formControlName="email"
+                     class="validate">
+              <label for="user-email">Email</label>
+              <div *ngFor="let validation of validationMessages.email">
+                <small style="color:red"
+                       *ngIf="authForm.get('email').hasError(validation.type) && (authForm.get('email').dirty || authForm.get('email').touched)"
+                >{{validation.message}}
+                </small>
+              </div>
+            </div>
+            <div *ngIf="authType == 'register'" class="input-field">
+              <input id="name"
+                     type="text"
+                     formControlName="name"
+                     class="validate">
+              <label for="name">Name</label>
+              <div *ngFor="let validation of validationMessages.name">
+                <small style="color:red"
+                       *ngIf="authForm.get('name').hasError(validation.type) && (authForm.get('name').dirty || authForm.get('name').touched)"
+                >{{validation.message}}
+                </small>
+              </div>
+            </div>
+            <div class="input-field">
+              <input id="user-password"
+                     type="password"
+                     formControlName="password"
+                     class="validate">
+              <label for="user-password">Password</label>
+              <div *ngFor="let validation of validationMessages.password">
+                <small style="color:red"
+                       *ngIf="authForm.get('password').hasError(validation.type) && (authForm.get('password').dirty || authForm.get('password').touched)"
+                >{{validation.message}}
+                </small>
+              </div>
+            </div>
+            <div *ngIf="authType == 'register'" class="input-field">
+              <input id="password_confirmation"
+                     type="password"
+                     formControlName="passwordConfirmation"
+                     class="validate">
+              <label for="password_confirmation">Password confirmation</label>
+              <div *ngFor="let validation of validationMessages.confirm_password">
+                <small style="color:red"
+                       *ngIf="authForm.get('passwordConfirmation').hasError(validation.type) && (authForm.get('passwordConfirmation').dirty || authForm.get('passwordConfirmation').touched)"
+                >{{validation.message}}
+                </small>
+              </div>
+            </div>
+            <button class="btn" [disabled]="!authForm.valid" type="submit">
+              {{ title }}
+            </button>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <app-loader class="right loader-right" [loadingState]="loading"></app-loader>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

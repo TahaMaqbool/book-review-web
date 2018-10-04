@@ -7,8 +7,11 @@ import {NotFoundComponent} from './shared/not-found/not-found.component';
 import {BookDetailResolver} from './books/book-detail/book-detail-resolver.service';
 import {AuthGuard} from './services/auth-guard.service';
 import {CategoryResolver} from './books/book-create/category-resolver.service';
+import {AuthComponent} from './auth/auth.component';
 
 const routes: Routes = [
+  { path: 'login', component: AuthComponent },
+  { path: 'register', component: AuthComponent },
   { path: 'books', component: BookListComponent },
   {
     path: 'books/new',
