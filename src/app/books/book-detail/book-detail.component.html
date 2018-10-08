@@ -168,3 +168,105 @@
   </div>
 
 </div>
+
+
+<div *ngIf="book && !edit" class="row">
+  <div class="col m4">
+    <div class="reviews">
+      <h1>Reviews</h1>
+      <app-book-review
+        *ngFor="let review of book.reviews"
+        [review]="review"
+      >
+      </app-book-review>
+      <div>
+        <button class="btn light-blue lighten-4 black-text" (click)="openAddReviewModal()">Add Review</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div
+    id="add-review-modal"
+    class="modal"
+    materialize="modal"
+    [materializeParams]="[{dismissible: true}]"
+    [materializeActions]="addReviewModal">
+    <div class="modal-content">
+      <div>
+      <span class="modal-close right">
+          <i class="fa fa-times" aria-hidden="true"></i>
+      </span>
+      </div>
+      <h4>Add Review</h4>
+
+
+      <form [formGroup]="addReviewForm" (ngSubmit)="submitReview()">
+
+        <!--<div class="row">-->
+          <!--<div class="input-field col s12">-->
+            <!--<input id="password"-->
+                   <!--type="password"-->
+                   <!--formControlName="password"-->
+                   <!--class="validate">-->
+            <!--<label for="password">Password</label>-->
+            <!--<div *ngFor="let validation of validationMessages.password">-->
+              <!--<small style="color:red"-->
+                     <!--*ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"-->
+              <!--&gt;{{validation.message}}-->
+              <!--</small>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+
+
+        <div class="row">
+          <div class="input-field col s12">
+            <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
+              <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+            </a>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="input-field col s12">
+            <textarea id="comment"
+                      formControlName="comment"
+                      class="materialize-textarea">
+            </textarea>
+            <label for="comment">Comment</label>
+            <!--<div *ngFor="let validation of validationMessages.email">-->
+              <!--<small style="color:red"-->
+                     <!--*ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"-->
+              <!--&gt;{{validation.message}}-->
+              <!--</small>-->
+            <!--</div>-->
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col s12 ">
+            <button type="submit" [disabled]="!addReviewForm.valid" class="waves-effect waves-light btn blue"> Submit </button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <app-loader [loadingState]="isSubmitting"></app-loader>
+          </div>
+        </div>
+      </form>
+
+
+
+
+    </div>
+    <!--<div class="modal-footer">-->
+      <!--<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="addReview()">Submit</a>-->
+    <!--</div>-->
+  </div>
+</div>

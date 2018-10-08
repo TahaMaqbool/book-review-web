@@ -10,6 +10,7 @@ import {ValidationMessages} from '../../shared/form-helpers/validation-messages'
 import {Category} from '../../models/category';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MaterializeAction, toast} from 'angular2-materialize';
+import {subscribeTo} from 'rxjs/internal/util/subscribeTo';
 
 @Component({
   selector: 'app-book-detail',
@@ -20,14 +21,18 @@ export class BookDetailComponent {
 
   deleteBookModal = new EventEmitter<string|MaterializeAction>();
   bookActionModal = new EventEmitter<string|MaterializeAction>();
+  addReviewModal = new EventEmitter<string|MaterializeAction>();
   isSubmitting = false;
   book: Book;
   editBookForm: FormGroup;
+  addReviewForm: FormGroup;
   edit = false;
   categories: Category[];
   validationMessages: any;
   fileToUpload: File = null;
   approvalMode = 'approve';
+  starList: boolean[] = [false, true, true, true, true];       // create a list which contains status of 5 stars
+  rating: number;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -46,6 +51,10 @@ export class BookDetailComponent {
       'book_img': ['', Validators.required],
       'category_id': [this.book.category_id, Validators.required],
     });
+    this.addReviewForm = this.fb.group({
+      'comment': ['', Validators.required],
+      'rating': [1, Validators.required]
+    });
     this.approvalMode = this.book.is_approved ? 'reject' : 'approve';
   }
 
@@ -63,6 +72,14 @@ export class BookDetailComponent {
 
   closeBookActionModal() {
     this.bookActionModal.emit({action: 'modal', params: ['close']});
+  }
+
+  openAddReviewModal() {
+    this.addReviewModal.emit({action: 'modal', params: ['open']});
+  }
+
+  closeAddReviewModal() {
+    this.addReviewModal.emit({action: 'modal', params: ['close']});
   }
 
   getBook() {
@@ -87,6 +104,14 @@ export class BookDetailComponent {
     this.editBookForm.get('book_img').patchValue(this.fileToUpload);
   }
 
+  setStar(data: any) {
+    this.rating = data + 1;
+    for (let i = 0; i <= 4; i++) {
+      (i <= data) ? this.starList[i] = false : this.starList[i] = true;
+    }
+    this.addReviewForm.get('rating').patchValue(this.rating);
+  }
+
   deleteBook(): void {
     this.isSubmitting = true;
     this.bookService.deleteBook(this.book.id)
@@ -94,6 +119,17 @@ export class BookDetailComponent {
         this.isSubmitting = false;
         toast('Book deleted successfully.', 3000, 'green');
         this.router.navigateByUrl('/books');
+      });
+  }
+
+  submitReview() {
+    this.isSubmitting = true;
+    this.bookService.createReview(this.book.id, this.addReviewForm.value)
+      .subscribe( review => {
+        this.isSubmitting = false;
+        this.closeAddReviewModal();
+        this.book.reviews.unshift(review);
+        toast('Review added successfully.', 3000, 'green');
       });
   }
 

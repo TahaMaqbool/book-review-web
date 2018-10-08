@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
 import {Category} from '../models/category';
 import {HttpService} from './http.service';
+import {Review} from '../models/review';
+import {HttpResponse} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +67,14 @@ export class BookService {
   deleteBook (id: number): Observable<Book> {
     const url = '/books/';
     return this.http.delete(url, id);
+  }
+
+  createReview(bookId: number, review: Review): Observable<Review> {
+    const url = '/books/' + bookId + '/reviews';
+    return this.http.post(url, review)
+      .pipe(
+        map(data => data.body)
+      );
   }
 
 }

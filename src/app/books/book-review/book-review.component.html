@@ -1,0 +1,10 @@
+<div class="review">
+  <div class="review-rating">
+    <a *ngFor="let item of starList">
+      <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+    </a>
+  </div>
+  <p class="review-comment">{{review.comment}}</p>
+  <div class="links btn-group">
+  </div>
+</div>

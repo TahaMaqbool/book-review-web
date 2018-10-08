@@ -20,6 +20,7 @@ import { LoginFormComponent } from './auth/login-form/login-form.component';
 import { RegisterFormComponent } from './auth/register-form/register-form.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { BookReviewComponent } from './books/book-review/book-review.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NotFoundComponent } from './shared/not-found/not-found.component';
     LoginFormComponent,
     RegisterFormComponent,
     LoaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    BookReviewComponent
   ],
   imports: [
     BrowserModule,

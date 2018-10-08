@@ -1,3 +1,5 @@
+import {Review} from './review';
+
 export class Book {
   id?: number;
   title: string;
@@ -7,4 +9,5 @@ export class Book {
   book_img: { url: { original: '' | object, medium: '', thumb: ''} };
   category_id: number;
   is_approved?: boolean;
+  reviews: Review[];
 }
