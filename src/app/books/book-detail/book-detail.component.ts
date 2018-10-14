@@ -1,4 +1,4 @@
-import {Component, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -17,8 +17,9 @@ declare var Materialize: any;
   templateUrl: './book-detail.component.html',
   styleUrls: ['./book-detail.component.css']
 })
-export class BookDetailComponent {
+export class BookDetailComponent implements OnInit {
 
+  isAuthenticated: boolean;
   deleteBookModal = new EventEmitter<string|MaterializeAction>();
   bookActionModal = new EventEmitter<string|MaterializeAction>();
   reviewModal = new EventEmitter<string|MaterializeAction>();
@@ -61,6 +62,14 @@ export class BookDetailComponent {
     this.approvalMode = this.book.is_approved ? 'reject' : 'approve';
   }
 
+  ngOnInit() {
+    this.authService.userSignedIn.subscribe(
+      (authenticated) => {
+        this.isAuthenticated = authenticated;
+      }
+    );
+  }
+
   openBookModal() {
     this.deleteBookModal.emit({action: 'modal', params: ['open']});
   }
@@ -78,6 +87,13 @@ export class BookDetailComponent {
   }
 
   openReviewModal(reviewMode: 'Add' | 'Edit' = 'Add') {
+    if (!this.isAuthenticated) {
+      this.router.navigate(['/login'], {
+        queryParams: {
+          returnUrl: this.route.snapshot.url.join('/')
+        }});
+      return;
+    }
     this.reviewTitle = reviewMode;
     this.reviewModal.emit({action: 'modal', params: ['open']});
   }

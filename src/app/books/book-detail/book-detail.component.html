@@ -188,7 +188,6 @@
   </div>
 </div>
 
-
 <div class="row">
   <div
     id="add-review-modal"
@@ -204,25 +203,7 @@
       </div>
       <h4>{{ reviewTitle }} Review</h4>
 
-
       <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-
-        <!--<div class="row">-->
-          <!--<div class="input-field col s12">-->
-            <!--<input id="password"-->
-                   <!--type="password"-->
-                   <!--formControlName="password"-->
-                   <!--class="validate">-->
-            <!--<label for="password">Password</label>-->
-            <!--<div *ngFor="let validation of validationMessages.password">-->
-              <!--<small style="color:red"-->
-                     <!--*ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"-->
-              <!--&gt;{{validation.message}}-->
-              <!--</small>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-
 
         <div class="row">
           <div class="input-field col s12">
@@ -232,7 +213,6 @@
           </div>
         </div>
 
-
         <div class="row">
           <div class="input-field col s12">
             <textarea id="comment"
@@ -240,15 +220,8 @@
                       class="materialize-textarea">
             </textarea>
             <label for="comment">Comment</label>
-            <!--<div *ngFor="let validation of validationMessages.email">-->
-              <!--<small style="color:red"-->
-                     <!--*ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"-->
-              <!--&gt;{{validation.message}}-->
-              <!--</small>-->
-            <!--</div>-->
           </div>
         </div>
-
 
         <div class="row">
           <div class="col s12 ">
@@ -263,12 +236,6 @@
         </div>
       </form>
 
-
-
-
     </div>
-    <!--<div class="modal-footer">-->
-      <!--<a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="addReview()">Submit</a>-->
-    <!--</div>-->
   </div>
 </div>

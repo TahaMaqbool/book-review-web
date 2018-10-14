@@ -14,6 +14,7 @@ import {toast} from 'angular2-materialize';
 export class AuthComponent implements OnInit {
   authType: String = '';
   title: String = '';
+  returnUrl: any;
   authForm: FormGroup;
   validationMessages: any;
   loading = false;
@@ -48,6 +49,10 @@ export class AuthComponent implements OnInit {
           '', [Validators.required, Validators.minLength(8)]));
       }
     });
+    this.route.queryParams
+      .subscribe(params => {
+        this.returnUrl = params['returnUrl'] || '/books';
+      });
     this.validationMessages = ValidationMessages.getValidationMessages();
   }
 
@@ -60,7 +65,7 @@ export class AuthComponent implements OnInit {
           if (res.status === 200) {
             this.loading = false;
             toast('Login Successful.', 3000, 'green');
-            this.router.navigate(['/books']);
+            this.router.navigateByUrl(this.returnUrl);
           }
         },
         error => {
