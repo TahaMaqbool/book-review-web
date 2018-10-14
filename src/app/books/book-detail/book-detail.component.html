@@ -175,12 +175,14 @@
     <div class="reviews">
       <h1>Reviews</h1>
       <app-book-review
-        *ngFor="let review of book.reviews"
+        *ngFor="let review of book.reviews; let i = index"
         [review]="review"
-      >
+        [canModify] = "(authService.currentUser | async) && (authService.currentUser.value.id == review.user_id || authService.currentUser.value?.admin)"
+        (editReview)="onEditReview(review, i)"
+        (deleteReview)="onDeleteReview(review)">
       </app-book-review>
       <div>
-        <button class="btn light-blue lighten-4 black-text" (click)="openAddReviewModal()">Add Review</button>
+        <button class="btn light-blue lighten-4 black-text" (click)="openReviewModal('Add')">Add Review</button>
       </div>
     </div>
   </div>
@@ -193,17 +195,17 @@
     class="modal"
     materialize="modal"
     [materializeParams]="[{dismissible: true}]"
-    [materializeActions]="addReviewModal">
+    [materializeActions]="reviewModal">
     <div class="modal-content">
       <div>
       <span class="modal-close right">
           <i class="fa fa-times" aria-hidden="true"></i>
       </span>
       </div>
-      <h4>Add Review</h4>
+      <h4>{{ reviewTitle }} Review</h4>
 
 
-      <form [formGroup]="addReviewForm" (ngSubmit)="submitReview()">
+      <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
 
         <!--<div class="row">-->
           <!--<div class="input-field col s12">-->
@@ -250,7 +252,7 @@
 
         <div class="row">
           <div class="col s12 ">
-            <button type="submit" [disabled]="!addReviewForm.valid" class="waves-effect waves-light btn blue"> Submit </button>
+            <button type="submit" [disabled]="!reviewForm.valid" class="waves-effect waves-light btn blue"> Submit </button>
           </div>
         </div>
 

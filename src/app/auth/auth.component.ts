@@ -65,7 +65,7 @@ export class AuthComponent implements OnInit {
         },
         error => {
           this.loading = false;
-          toast(error.err.json().errors[0], 3000, 'red');
+          toast(error.json().errors[0], 3000, 'red');
         }
       );
     } else {

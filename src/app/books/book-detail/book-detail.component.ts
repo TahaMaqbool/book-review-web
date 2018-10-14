@@ -4,13 +4,13 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import {ActivatedRoute, Router} from '@angular/router';
 import {BookService} from '../../services/book.service';
 import {Book} from '../../models/book';
-import { Angular2TokenService } from 'angular2-token';
 import {AuthService} from '../../services/auth.service';
 import {ValidationMessages} from '../../shared/form-helpers/validation-messages';
 import {Category} from '../../models/category';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MaterializeAction, toast} from 'angular2-materialize';
-import {subscribeTo} from 'rxjs/internal/util/subscribeTo';
+import {Review} from '../../models/review';
+declare var Materialize: any;
 
 @Component({
   selector: 'app-book-detail',
@@ -21,16 +21,18 @@ export class BookDetailComponent {
 
   deleteBookModal = new EventEmitter<string|MaterializeAction>();
   bookActionModal = new EventEmitter<string|MaterializeAction>();
-  addReviewModal = new EventEmitter<string|MaterializeAction>();
+  reviewModal = new EventEmitter<string|MaterializeAction>();
   isSubmitting = false;
   book: Book;
   editBookForm: FormGroup;
-  addReviewForm: FormGroup;
+  reviewForm: FormGroup;
   edit = false;
   categories: Category[];
   validationMessages: any;
   fileToUpload: File = null;
   approvalMode = 'approve';
+  reviewTitle: string;
+  selectedReview: Review;
   starList: boolean[] = [false, true, true, true, true];       // create a list which contains status of 5 stars
   rating: number;
 
@@ -51,7 +53,8 @@ export class BookDetailComponent {
       'book_img': ['', Validators.required],
       'category_id': [this.book.category_id, Validators.required],
     });
-    this.addReviewForm = this.fb.group({
+    this.reviewForm = this.fb.group({
+      'index': [{value: null, disabled: true}],
       'comment': ['', Validators.required],
       'rating': [1, Validators.required]
     });
@@ -74,12 +77,13 @@ export class BookDetailComponent {
     this.bookActionModal.emit({action: 'modal', params: ['close']});
   }
 
-  openAddReviewModal() {
-    this.addReviewModal.emit({action: 'modal', params: ['open']});
+  openReviewModal(reviewMode: 'Add' | 'Edit' = 'Add') {
+    this.reviewTitle = reviewMode;
+    this.reviewModal.emit({action: 'modal', params: ['open']});
   }
 
-  closeAddReviewModal() {
-    this.addReviewModal.emit({action: 'modal', params: ['close']});
+  closeReviewModal() {
+    this.reviewModal.emit({action: 'modal', params: ['close']});
   }
 
   getBook() {
@@ -109,7 +113,7 @@ export class BookDetailComponent {
     for (let i = 0; i <= 4; i++) {
       (i <= data) ? this.starList[i] = false : this.starList[i] = true;
     }
-    this.addReviewForm.get('rating').patchValue(this.rating);
+    this.reviewForm.get('rating').patchValue(this.rating);
   }
 
   deleteBook(): void {
@@ -124,13 +128,25 @@ export class BookDetailComponent {
 
   submitReview() {
     this.isSubmitting = true;
-    this.bookService.createReview(this.book.id, this.addReviewForm.value)
-      .subscribe( review => {
-        this.isSubmitting = false;
-        this.closeAddReviewModal();
-        this.book.reviews.unshift(review);
-        toast('Review added successfully.', 3000, 'green');
-      });
+    const index = this.reviewForm.getRawValue().index;
+    if (index != null) {
+      this.bookService.updateReview(this.book.id, this.selectedReview.id, this.reviewForm.value)
+        .subscribe( review => {
+          this.isSubmitting = false;
+          this.book.reviews[index] = review;
+          this.closeReviewModal();
+          toast('Review updated successfully.', 3000, 'green');
+        });
+    } else {
+      this.bookService.createReview(this.book.id, this.reviewForm.value)
+        .subscribe( review => {
+          this.isSubmitting = false;
+          this.closeReviewModal();
+          this.book.reviews.unshift(review);
+          toast('Review added successfully.', 3000, 'green');
+        });
+    }
+    this.reviewForm.reset();
   }
 
   bookAction(): void {
@@ -159,6 +175,37 @@ export class BookDetailComponent {
         err => {
           this.isSubmitting = false;
           toast(err.error.message, 3000, 'red');
+        }
+      );
+  }
+
+  onEditReview(review: Review, i: number) {
+    this.openReviewModal('Edit');
+    this.reviewForm.setValue({
+      index: i,
+      comment: review.comment,
+      rating: review.rating
+    });
+    Materialize.updateTextFields();
+    this.setEditStarRating(review.rating);
+    this.selectedReview = review;
+  }
+
+  setEditStarRating(rating: number) {
+    this.starList.fill(true);
+    for (let i = 0; i <= rating - 1; i++) {
+      this.starList[i] = false;
+    }
+  }
+
+  onDeleteReview(review: Review) {
+    this.bookService.deleteReview(this.book.id, review.id)
+      .subscribe(
+        success => {
+          this.book.reviews = this.book.reviews.filter((item) => item !== review);
+          toast('Review deleted successfully.', 3000, 'green');
+        }, errorResponse => {
+            toast(errorResponse.error.errors[0], 3000, 'red');
         }
       );
   }

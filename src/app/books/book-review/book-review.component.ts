@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Review} from '../../models/review';
 
 @Component({
@@ -14,6 +14,9 @@ export class BookReviewComponent implements OnInit {
   constructor() { }
 
   @Input() review: Review;
+  @Input() canModify: boolean;
+  @Output() editReview = new EventEmitter<boolean>();
+  @Output() deleteReview = new EventEmitter<boolean>();
 
   setStar(data: any) {
     this.rating = data + 1;
@@ -31,6 +34,14 @@ export class BookReviewComponent implements OnInit {
 
   ngOnInit() {
     this.setInitialRating();
+  }
+
+  editClicked() {
+    this.editReview.emit(true);
+  }
+
+  deleteClicked() {
+    this.deleteReview.emit(true);
   }
 
 }

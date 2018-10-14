@@ -60,6 +60,13 @@ export class HttpService {
     return this.http.put(url, {}, {headers, observe: 'response'});
   }
 
+  set(url: string, formData: {}): Observable<any> {
+    url = this.api + url;
+    this.updateHeaders();
+    const headers = this.headers;
+    return this.http.put(url, formData, {headers, observe: 'response'});
+  }
+
   delete (url: string, id: number): Observable<any> {
     url = this.api + url + id;
     this.updateHeaders();

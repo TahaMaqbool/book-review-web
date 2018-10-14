@@ -4,7 +4,12 @@
       <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
     </a>
   </div>
-  <p class="review-comment">{{review.comment}}</p>
+  <p class="review-comment">{{review.comment}}
+  <span *ngIf="canModify">
+    <i class="fa fa-edit" (click)="editClicked()"></i>
+    <i class="fa fa-trash" (click)="deleteClicked()"></i>
+  </span>
+  </p>
   <div class="links btn-group">
   </div>
 </div>

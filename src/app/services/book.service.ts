@@ -77,4 +77,17 @@ export class BookService {
       );
   }
 
+  updateReview(bookId: number, id: number, review: Review): Observable<Review> {
+    const url = '/books/' + bookId + '/reviews/' + id;
+    return this.http.set(url, review)
+      .pipe(
+        map(data => data.body)
+      );
+  }
+
+  deleteReview(bookId: number, id: number): Observable<Review> {
+    const url = '/books/' + bookId + '/reviews/';
+    return this.http.delete(url, id);
+  }
+
 }
