@@ -67,10 +67,14 @@
     </div>
 
     <div>
+      <label class="btn" for="file">Choose File</label>
       <input type="file"
              id="file"
              class="validate"
+             style="display: none;"
+             #fileInput
              (change)="handleFileInput($event.target.files)">
+      <p style="display:inline-block">{{fileInputText}}</p>
     </div>
 
     <div class="row">

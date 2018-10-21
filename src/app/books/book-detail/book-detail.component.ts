@@ -18,7 +18,6 @@ declare var Materialize: any;
   styleUrls: ['./book-detail.component.css']
 })
 export class BookDetailComponent implements OnInit {
-
   isAuthenticated: boolean;
   deleteBookModal = new EventEmitter<string|MaterializeAction>();
   bookActionModal = new EventEmitter<string|MaterializeAction>();
@@ -28,6 +27,7 @@ export class BookDetailComponent implements OnInit {
   editBookForm: FormGroup;
   reviewForm: FormGroup;
   edit = false;
+  fileInputText: string;
   categories: Category[];
   validationMessages: any;
   fileToUpload: File = null;
@@ -46,12 +46,13 @@ export class BookDetailComponent implements OnInit {
               public authService: AuthService) {
     this.getBook();
     this.getCategories();
+    this.fileInputText = this.book.book_img.name;
     this.editBookForm = this.fb.group({
       'id': [this.book.id],
       'title': [this.book.title, Validators.required],
       'description': [this.book.description, Validators.required],
       'author': [this.book.author, Validators.required],
-      'book_img': ['', Validators.required],
+      'book_img': [this.book.book_img.url.original, Validators.required],
       'category_id': [this.book.category_id, Validators.required],
     });
     this.reviewForm = this.fb.group({
@@ -122,6 +123,7 @@ export class BookDetailComponent implements OnInit {
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
     this.editBookForm.get('book_img').patchValue(this.fileToUpload);
+    this.fileInputText = this.fileToUpload.name;
   }
 
   setStar(data: any) {
@@ -177,6 +179,9 @@ export class BookDetailComponent implements OnInit {
 
   submitForm() {
     this.isSubmitting = true;
+    if (typeof this.editBookForm.get('book_img').value === 'string') {
+      this.editBookForm.removeControl('book_img');
+    }
     const formData = this.getFormData(this.editBookForm.value);
     formData.append('user_id', this.authService.currentUser.value.id.toString());
     this.bookService
@@ -227,14 +232,17 @@ export class BookDetailComponent implements OnInit {
   }
 
   updateBook() {
-    const sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileToUpload));
-    this.book.book_img.url.original = sanitizedUrl;
+    if (this.fileToUpload) {
+      const sanitizedUrl = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(this.fileToUpload));
+      this.book.book_img.url.original = sanitizedUrl;
+    }
     this.book.id = +this.editBookForm.get('id').value;
     this.book.title = this.editBookForm.get('title').value;
     this.book.description = this.editBookForm.get('description').value;
     this.book.author = this.editBookForm.get('author').value;
     this.book.category_id = this.editBookForm.get('category_id').value;
     this.book.user_id = this.authService.currentUser.value.id;
+    this.editBookForm.addControl('book_img', new FormControl(this.book.book_img.url.original, Validators.required))
   }
 
   getFormData(object) {
