@@ -4,8 +4,8 @@
       <div class="col m6 offset-m3 col s12">
         <h1>{{ title }}</h1>
         <p>
-          <a [routerLink]="['/login']" *ngIf="authType == 'register'">Have an account?</a>
-          <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
+          <a [routerLink]="['/login']" [queryParams]="{returnUrl: returnUrl}" *ngIf="authType == 'register'">Have an account?</a>
+          <a [routerLink]="['/register']" [queryParams]="{returnUrl: returnUrl}" *ngIf="authType == 'login'">Need an account?</a>
         </p>
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <div>

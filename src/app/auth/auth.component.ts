@@ -79,7 +79,7 @@ export class AuthComponent implements OnInit {
           if (res.status === 200) {
             this.loading = false;
             toast('You have registered successfully.', 3000, 'green');
-            this.router.navigate(['/books']);
+            this.router.navigateByUrl(this.returnUrl);
           }
         },
         error => {
