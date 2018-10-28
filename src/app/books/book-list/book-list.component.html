@@ -5,12 +5,23 @@
 </p>
 <app-loader [loadingState]=loading></app-loader>
 
+<ngx-loading [show]="routeTransition" [config]="{
+                backdropBorderRadius: '14px',
+                backdropBackgroundColour: 'rgba(0,0,0,0.87)',
+                fullScreenBackdrop: 'true',
+                backdropBorderRadius: '10px',
+                primaryColour: '#28aef0',
+                secondaryColour: '#28aef0',
+                tertiaryColour: '#28aef0'
+             }">
+</ngx-loading>
+
 <div *ngIf="books">
 
   <p *ngIf="books === undefined || books.length == 0 && !loading">No record found!</p>
 
   <div class="row">
-    <a *ngFor="let book of books" routerLink="/books/{{book.id}}">
+    <a *ngFor="let book of books" (click)="viewBook(book)">
       <div class="col s3">
         <img class="img-responsive book" [src]="book.book_img.url.medium" alt="book image">
       </div>

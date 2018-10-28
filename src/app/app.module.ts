@@ -7,7 +7,7 @@ import { Angular2TokenService } from 'angular2-token';
 import { AppComponent } from './app.component';
 import { BooksComponent } from './books/books.component';
 import { AppRoutingModule } from './/app-routing.module';
-import { BookListComponent } from './books/book-list/book-list.component';
+import {ngxLoadingAnimationTypes, NgxLoadingModule} from 'ngx-loading';
 import { AuthComponent } from './auth/auth.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BookCreateComponent } from './books/book-create/book-create.component';
@@ -21,6 +21,7 @@ import { RegisterFormComponent } from './auth/register-form/register-form.compon
 import { LoaderComponent } from './shared/loader/loader.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { BookReviewComponent } from './books/book-review/book-review.component';
+import {BookListComponent} from './books/book-list/book-list.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,15 @@ import { BookReviewComponent } from './books/book-review/book-review.component';
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterializeModule
+    MaterializeModule,
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.threeBounce,
+      backdropBackgroundColour: 'rgba(0,0,0,1)',
+      backdropBorderRadius: '4px',
+      primaryColour: '#ffffff',
+      secondaryColour: '#ffffff',
+      tertiaryColour: '#ffffff'
+    })
   ],
   providers: [Angular2TokenService],
   bootstrap: [AppComponent]
