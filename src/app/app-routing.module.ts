@@ -1,28 +1,11 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {BookListComponent} from './books/book-list/book-list.component';
-import {BookCreateComponent} from './books/book-create/book-create.component';
-import {BookDetailComponent} from './books/book-detail/book-detail.component';
+import { Routes, RouterModule } from '@angular/router';
 import {NotFoundComponent} from './shared/not-found/not-found.component';
-import {BookDetailResolver} from './books/book-detail/book-detail-resolver.service';
-import {AuthGuard} from './services/auth-guard.service';
-import {CategoryResolver} from './books/book-create/category-resolver.service';
-import {AuthComponent} from './auth/auth.component';
 
 const routes: Routes = [
-  { path: 'login', component: AuthComponent },
-  { path: 'register', component: AuthComponent },
-  { path: 'books', component: BookListComponent },
   {
-    path: 'books/new',
-    component: BookCreateComponent,
-    resolve: { categories: CategoryResolver },
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'books/:id',
-    component: BookDetailComponent,
-    resolve: { book: BookDetailResolver, categories: CategoryResolver }
+    path: 'books',
+    loadChildren: './books/books.module#BooksModule'
   },
   { path: '', redirectTo: '/books', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent },
