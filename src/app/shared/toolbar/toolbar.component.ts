@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { AuthDialogComponent } from '../../auth/auth-dialog/auth-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { BookService } from '../../services/book.service';
@@ -12,8 +11,6 @@ import { Category } from '../../models/category';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
-
-  @ViewChild('authDialog') authDialog: AuthDialogComponent;
 
   categories: Category[];
   isAllSelected = true;
@@ -57,10 +54,6 @@ export class ToolbarComponent implements OnInit {
     this.isAllSelected = true;
     this.bookService.changeCategory(null);
     this.location.replaceState('books');
-  }
-
-  presentAuthDialog(mode?: 'login'| 'register') {
-    this.authDialog.openDialog(mode);
   }
 
   logOut() {
