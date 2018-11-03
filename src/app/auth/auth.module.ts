@@ -4,6 +4,7 @@ import { AuthComponent } from './auth.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { AuthRoutingModule } from './auth-routing.module';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { AuthRoutingModule } from './auth-routing.module';
   declarations: [
     AuthComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    ResetPasswordComponent
   ],
   exports: [
     LoginFormComponent,

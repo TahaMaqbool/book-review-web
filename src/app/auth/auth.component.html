@@ -64,6 +64,7 @@
             <button class="btn" [disabled]="!authForm.valid" type="submit">
               {{ title }}
             </button>
+            <a *ngIf="authType == 'login'" routerLink="/reset">Forgot Password?</a>
           </div>
           <div class="row">
             <div class="col s12">

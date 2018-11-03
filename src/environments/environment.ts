@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   token_auth_config: {
-    apiBase: 'http://192.168.8.106:3000/api/v1'
+    apiBase: 'http://192.168.8.104:3000/api/v1',
+    resetPasswordCallback: 'http://localhost:4200/reset',
   }
 };
 
