@@ -1,15 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s10">
         <h4>New Book</h4>
     </div>
   </div>
 
   <div class="row">
-    <div class="col s12">  
+    <div class="col s10">  
       <form [formGroup]="bookForm" (ngSubmit)="submitForm()">
 
-          <div class="input-field col s12">
+          <div class="input-field col s10">
             <select
               id="selectCategory"
               class="validate"
@@ -28,14 +28,14 @@
             </div>
           </div>
 
-        <div class="col s12">
+        <div class="col s10">
           <input type="file"
                 id="file"
                 class="validate"
                 (change)="handleFileInput($event.target.files)">
         </div>
 
-        <div class="input-field col s12">
+        <div class="input-field col s10">
           <input id="title"
                 formControlName="title"
                 type="text"
@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="input-field col s12">
+        <div class="input-field col s10">
           <input id="description"
                 formControlName="description"
                 type="text"
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-          <div class="input-field col s12">
+          <div class="input-field col s10">
             <input id="author"
                   formControlName="author"
                   type="text"
@@ -77,14 +77,14 @@
             <label for="author">Author</label>
           </div>
 
-          <div class="col s12 ">
+          <div class="col s10 ">
             <button
               type="submit"
               [disabled]="!bookForm.valid || isSubmitting"
               class="btn btn-lg btn-primary pull-xs-right">Submit </button>
           </div>
 
-          <div class="col s12">
+          <div class="col s10">
             <app-loader class="loader-align-right" [loadingState]="isSubmitting"></app-loader>
           </div>
 
@@ -95,7 +95,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col s12">
+    <div class="col s10">
       <div class="modal" materialize="modal" [materializeParams]="[{dismissible: false}]" [materializeActions]="modalActions">
         <div class="modal-content">
           <h4>Pending Approval</h4>
