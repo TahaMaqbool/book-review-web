@@ -54,7 +54,7 @@
   <form [formGroup]="editBookForm" (ngSubmit)="submitForm()">
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <select
           id="selectCategory"
           class="validate"
@@ -86,7 +86,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="title"
                formControlName="title"
                type="text"
@@ -102,7 +102,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="description"
                formControlName="description"
                type="text"
@@ -118,7 +118,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="author"
                formControlName="author"
                type="text"
@@ -133,7 +133,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12 ">
+      <div class="col s5">
         <button
           type="submit"
           [disabled]="!editBookForm.valid || isSubmitting"
@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12">
+      <div class="col s5">
         <app-loader class="loader-align-right" [loadingState]="isSubmitting"></app-loader>
       </div>
     </div>
