@@ -5,3 +5,7 @@ ul.dropdown-content li a {
 ul.dropdown-content li a.active {
   background-color: #A9A9A9;
 }
+
+.brand-logo{
+  padding-left: 0px;
+}

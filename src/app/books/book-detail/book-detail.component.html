@@ -1,30 +1,38 @@
 <!--<i class="fa fa-arrow-left back-icon" (click)="goBack()"></i>-->
 <!-- Modal Structure -->
-<div class="row">
-  <div id="book-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="deleteBookModal">
-    <div class="modal-content">
-      <h4>Delete Book</h4>
-      <p>Are you sure you want to delete this book?</p>
-    </div>
-    <div class="modal-footer">
-      <a class="waves-effect waves-green btn-flat" (click)="closeBookModal()">Close</a>
-      <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="deleteBook()">Agree</a>
-    </div>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div id="book-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="deleteBookModal">
+        <div class="modal-content">
+          <h4>Delete Book</h4>
+          <p>Are you sure you want to delete this book?</p>
+        </div>
+        <div class="modal-footer">
+          <a class="waves-effect waves-green btn-flat" (click)="closeBookModal()">Close</a>
+          <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="deleteBook()">Agree</a>
+        </div>
+      </div>
+    </div>  
   </div>
 </div>
 
-<div class="row">
-  <div id="book-action-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="bookActionModal">
-    <div class="modal-content">
-      <h4>{{ approvalMode | titlecase }} Book</h4>
-      <p>Are you sure you want to {{ approvalMode }} this book?</p>
-    </div>
-    <div class="modal-footer">
-      <a class="waves-effect waves-green btn-flat" (click)="closeBookActionModal()">Close</a>
-      <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="bookAction()">Agree</a>
-    </div>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div id="book-action-modal" class="modal" materialize="modal" [materializeParams]="[{dismissible: true}]" [materializeActions]="bookActionModal">
+        <div class="modal-content">
+          <h4>{{ approvalMode | titlecase }} Book</h4>
+          <p>Are you sure you want to {{ approvalMode }} this book?</p>
+        </div>
+        <div class="modal-footer">
+          <a class="waves-effect waves-green btn-flat" (click)="closeBookActionModal()">Close</a>
+          <a class="modal-action modal-close waves-effect waves-green btn-flat" (click)="bookAction()">Agree</a>
+        </div>
+      </div>
+    </div>  
   </div>
-</div>
+</div>  
 
 <div *ngIf="book && !edit" class="row">
 
@@ -46,7 +54,7 @@
   <form [formGroup]="editBookForm" (ngSubmit)="submitForm()">
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <select
           id="selectCategory"
           class="validate"
@@ -78,7 +86,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="title"
                formControlName="title"
                type="text"
@@ -94,7 +102,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="description"
                formControlName="description"
                type="text"
@@ -110,7 +118,7 @@
     </div>
 
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s5">
         <input id="author"
                formControlName="author"
                type="text"
@@ -125,7 +133,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12 ">
+      <div class="col s5">
         <button
           type="submit"
           [disabled]="!editBookForm.valid || isSubmitting"
@@ -133,7 +141,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12">
+      <div class="col s5">
         <app-loader class="loader-align-right" [loadingState]="isSubmitting"></app-loader>
       </div>
     </div>
@@ -192,54 +200,49 @@
   </div>
 </div>
 
-<div class="row">
-  <div
-    id="add-review-modal"
-    class="modal"
-    materialize="modal"
-    [materializeParams]="[{dismissible: true}]"
-    [materializeActions]="reviewModal">
-    <div class="modal-content">
-      <div>
-      <span class="modal-close right">
-          <i class="fa fa-times" aria-hidden="true"></i>
-      </span>
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <div
+        id="add-review-modal"
+        class="modal"
+        materialize="modal"
+        [materializeParams]="[{dismissible: true}]"
+        [materializeActions]="reviewModal">
+        <div class="modal-content">
+          <div>
+          <span class="modal-close right">
+              <i class="fa fa-times" aria-hidden="true"></i>
+          </span>
+          </div>
+          <h4>{{ reviewTitle }} Review</h4>
+
+          <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+
+              <div class="input-field col s12">
+                <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
+                  <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+                </a>
+              </div>
+
+              <div class="input-field col s12">
+                <textarea id="comment"
+                          formControlName="comment"
+                          class="materialize-textarea">
+                </textarea>
+                <label for="comment">Comment</label>
+              </div>
+
+              <div class="col s12 ">
+                <button type="submit" [disabled]="!reviewForm.valid" class="waves-effect waves-light btn blue"> Submit </button>
+              </div>
+
+              <div class="col s12">
+                <app-loader [loadingState]="isSubmitting"></app-loader>
+              </div>
+          </form>
+        </div>
       </div>
-      <h4>{{ reviewTitle }} Review</h4>
-
-      <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-
-        <div class="row">
-          <div class="input-field col s12">
-            <a *ngFor="let item of starList; let i=index " (click)="setStar(i)">
-              <i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-            </a>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="comment"
-                      formControlName="comment"
-                      class="materialize-textarea">
-            </textarea>
-            <label for="comment">Comment</label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col s12 ">
-            <button type="submit" [disabled]="!reviewForm.valid" class="waves-effect waves-light btn blue"> Submit </button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col s12">
-            <app-loader [loadingState]="isSubmitting"></app-loader>
-          </div>
-        </div>
-      </form>
-
     </div>
   </div>
 </div>

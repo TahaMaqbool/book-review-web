@@ -1,46 +1,45 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSignInSubmit()">
-
-  <div class="row">
-    <div class="input-field col s12">
-      <input id="email"
-             type="email"
-             formControlName="email"
-             class="validate">
-      <label for="email">Email</label>
-      <div *ngFor="let validation of validationMessages.email">
-        <small style="color:red"
-               *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"
-        >{{validation.message}}
-        </small>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="input-field col s12">
-      <input id="password"
-             type="password"
-             formControlName="password"
-             class="validate">
-      <label for="password">Password</label>
-      <div *ngFor="let validation of validationMessages.password">
-        <small style="color:red"
-               *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"
-        >{{validation.message}}
-        </small>
-      </div>
-    </div>
-  </div>
-
-    <div class="row">
-      <div class="col s12 ">
-        <button type="submit" [disabled]="!loginForm.valid" class="waves-effect waves-light btn blue right"> Login </button>
-      </div>
-    </div>
-
+<div class="container">
   <div class="row">
     <div class="col s12">
-      <app-loader class="right loader-right" [loadingState]="loading"></app-loader>
+      <form [formGroup]="loginForm" (ngSubmit)="onSignInSubmit()">
+
+          <div class="input-field">
+            <input id="email"
+                  type="email"
+                  formControlName="email"
+                  class="validate">
+            <label for="email">Email</label>
+            <div *ngFor="let validation of validationMessages.email">
+              <small style="color:red"
+                    *ngIf="loginForm.get('email').hasError(validation.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)"
+              >{{validation.message}}
+              </small>
+            </div>
+          </div>
+
+          <div class="input-field">
+            <input id="password"
+                  type="password"
+                  formControlName="password"
+                  class="validate">
+            <label for="password">Password</label>
+            <div *ngFor="let validation of validationMessages.password">
+              <small style="color:red"
+                    *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+              >{{validation.message}}
+              </small>
+            </div>
+          </div>
+
+          <div class="col s12 ">
+            <button type="submit" [disabled]="!loginForm.valid" class="waves-effect waves-light btn blue right"> Login </button>
+          </div>
+
+          <div class="col s12">
+            <app-loader class="right loader-right" [loadingState]="loading"></app-loader>
+          </div>
+
+      </form>
     </div>
   </div>
-</form>
+</div>
